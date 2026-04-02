@@ -1,10 +1,20 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Attribute from './Attribute'; // <-- Import the separate file
+export default App
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [items, setItems] = useState([]);
+
+  const addCard = () => {
+    const newCard = { id: Date.now(), text: `Attribute ${items.length + 1}` };
+    setItems([...items, newCard]);
+  };
+
+  const removeCard = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
 
   return (
     <>
@@ -13,12 +23,12 @@ function App() {
       <h1>Json generator</h1>
       <div class="container" className="generator">
         <div class="row">
-          <a class="leftjson">ID: </a>
-          <input class="rightjson" name="id" id="id"/>
+          <a >ID: </a>
+          <input  name="id" id="id"/>
         </div>
         <div class="row">
-          <a class="leftjson">Class: </a>
-          <select class="rightjson" name="class" id="class">
+          <a >Class: </a>
+          <select  name="class" id="class">
             <option value="base">Base</option>
             <option value="sigil">Sigil</option>
             <option value="augment">Augment</option>
@@ -27,12 +37,12 @@ function App() {
           </select>
         </div>
         <div class="row">
-          <a class="leftjson">Name: </a>
-          <input class="rightjson" name="name" id="name"/>
+          <a >Name: </a>
+          <input  name="name" id="name"/>
         </div>
         <div class="row">
-          <a class="leftjson">Rarity: </a>
-          <select class="rightjson" name="rarity" id="rarity">
+          <a >Rarity: </a>
+          <select  name="rarity" id="rarity">
             <option value="common">Common</option>
             <option value="uncommon">Uncommon</option>
             <option value="rare">Rare</option>
@@ -41,12 +51,24 @@ function App() {
           </select>
         </div>
         <div class="row">
-          <a class="leftjson">Icon: </a>
-          <input class="rightjson" name="texture" id="texture"/>
+          <a >Icon: </a>
+          <input  name="texture" id="texture"/>
+        </div>
+        <div class="row">
+          <a >Attributes: </a>
+          <button class='add' onClick={addCard}>+</button>
+        </div>
+        <div>
+          {items.map(item => (
+              <Attribute 
+                key={item.id} 
+                id={item.id} 
+                title={item.text} 
+                onRemove={removeCard} 
+              />
+            ))}
         </div>
       </div>
     </>
   )
 }
-
-export default App

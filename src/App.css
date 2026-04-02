@@ -1,3 +1,12 @@
+:root {
+  --node-add: #9bd464;
+  --node-add-hover: #b0e77c;
+  --node-add-border: #498d09;
+  --node-remove: #e76f51;
+  --node-remove-hover: #f77c5d;
+  --node-remove-border: #be4b2e;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -12,21 +21,25 @@
 .row {
   flex: 1 1 33%;
   display: flex;
-  align-content: center;
-  justify-content: center;
+  align-content: left;
+  justify-content: flex-start;
   margin: 10px
 }
 
-
-.leftjson {
-  flex: 1 2 33%;
-  margin-left: 60px;
-  text-align: left;
-  width: 20;
+button.add {
+  background-color: var(--node-add);
+  border-color: var(--node-add-border);
 }
-.rightjson {
-  flex: 2 2 33%;
-  margin-left: 60px;
-  text-align: left;
-  width: 50px;
+
+button.add:enabled:hover {
+  background-color: var(--node-add-hover);
+}
+
+button.remove {
+  background-color: var(--node-remove);
+  border-color: var(--node-remove-border);
+}
+
+button.remove:enabled:hover {
+  background-color: var(--node-remove-hover);
 }
