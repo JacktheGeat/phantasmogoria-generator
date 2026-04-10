@@ -2,10 +2,9 @@ import {React, useState } from 'react';
 
 import './App.css'
 
-const intAttributes = ['base_power', 'mana_cost', 'mana_overcharge','exhaust_limit', 'expunge_limit', 'base_amount']
-const floatAttributes = ['power_multiplier', 'cost_multiplier', 'overcharge_multiplier']
-
 const Attribute = ({ id, attributeClass, onRemove }) => {
+  const intAttributes = ['base_power', 'mana_cost', 'mana_overcharge','exhaust_limit', 'expunge_limit', 'base_amount']
+  const floatAttributes = ['power_multiplier', 'cost_multiplier', 'overcharge_multiplier']
   if (attributeClass == '') {return <></>}
   let input;
   if (intAttributes.includes(attributeClass)) {
@@ -17,7 +16,7 @@ const Attribute = ({ id, attributeClass, onRemove }) => {
   else if (attributeClass == "mana_curve") {
     input = (
     <select>
-
+      <option></option>
     </select>
     )
   }
@@ -44,27 +43,32 @@ const Attribute = ({ id, attributeClass, onRemove }) => {
 
 export default Attributes;
 
-function Attributes() {
-  const availableAttributes = ['base_power', 'mana_cost', 'mana_overcharge', 'mana_curve', 'exhaust_limit', 'expunge_limit', 'power_multiplier', 'cost_multiplier', 'overcharge_multiplier', 'base_amount', 'consumability' ]
+function Attributes({attributeJSON}) {
+  const [selectedValue, setSelectedValue] = useState();
+  const availableAttributes = ['base_power', 'mana_cost', 'mana_overcharge', 'mana_curve', 'exhaust_limit', 'expunge_limit', 'power_multiplier', 'cost_multiplier', 'overcharge_multiplier', 'base_amount', 'consumability' ];
   const [attributeBox, setAttributeBox] = useState([]);
   const [attributeInput, setAttributeInput] = useState('');
 
   const addAttribute= () => {
-    const newAttribute = { id: Date.now(), attributeClass: `${attributeInput}` };
-    setAttributeBox([...attributeBox, newAttribute]);
+    if (attributeInput !== undefined) {
+      const newAttribute = { id: Date.now(), attributeClass: `${attributeInput}` };
+      setSelectedValue()
+      setAttributeInput()
+      setAttributeBox([...attributeBox, newAttribute]);
+    }
   };
-  const removeAttribute = (id, attributeClass) => {
+  const removeAttribute = (id) => {
     setAttributeBox(attributeBox.filter(item => item.id !== id));
   };
   
   return (
     <>
-    <div className="row">
-      <a >Attributes: </a>
-      <select  name="class" id="class" onChange={e => setAttributeInput(e.target.value)}>
-        <option value=""></option>
-        {availableAttributes.map(item => (
-          <option value={item}>{item}</option>
+    <div className="node">
+      <a className="nodeName">Attributes: </a>
+      <select name="class" value={selectedValue} onChange={e => {setAttributeInput(e.target.value); setSelectedValue(e.target.value)}}>
+        <option></option>
+        {availableAttributes.filter(item => !attributeBox.map(attribute => attribute.attributeClass).includes(item)).map(item => (
+          <option key={item} value={item}>{item}</option>
         ))}
       </select>
       <button className='add' onClick={addAttribute}>+</button>

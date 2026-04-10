@@ -3,37 +3,51 @@ import {React, useState } from 'react';
 import './App.css'
 
 const Effect = ({ id, effectClass, onRemove }) => {
+  if (effectClass == '') {return <></>}
+  let input = <></>
   return (
-    <div style={{ border: '1px dotted blue', padding: '10px', margin: '10px' }}>
-      <h3>{effectClass}</h3>
-      <button className='remove' onClick={() => onRemove(id)}>-</button>
-    </div>
+    <>
+      <div className='effectBox'>
+        <button className='remove' onClick={() => onRemove(id)}>-</button>
+        <a>{effectClass}:</a>
+        {input}
+      </div>
+    </>
   );
 };
 
 export default Effects;
 
-function Effects() {
-  const [effectItems, setEffectItems] = useState([]);
+function Effects({effectJSON}) {
+  const [selectedValue, setSelectedValue] = useState();
+  const availableEffects = ["exhaust", "expunge", "status", "block", "damage", "multi_damage", "heal", "draw", "mana_restore", "apply_modifier", "modify_player", "modify_component", "modify_component_type", "modify_component_tag"];
+  const [effectBox, setEffectBox] = useState([]);
   const [effectInput, setEffectInput] = useState('');
 
   const addEffect= () => {
-    const newEffect = { id: Date.now(), effectClass: `${effectInput}` };
-    setEffectItems([...effectItems, newEffect]);
+    if (effectInput !== undefined) {
+      const newEffect = { id: Date.now(), effectClass: `${effectInput}` };
+      setEffectBox([...effectBox, newEffect]);
+    }
   };
   const removeEffect = (id) => {
-    setEffectItems(effectItems.filter(item => item.id !== id));
+    setEffectBox(effectBox.filter(item => item.id !== id));
   };
   
   return (
     <>
-    <div className="row">
-      <a >Effects: </a>
-      <input type='text' value={effectInput} onChange={e => setEffectInput(e.target.value)}/>
+    <div className="node">
+      <a className="nodeName">Effects: </a>
+      <select name="class" value={selectedValue} onChange={e => {setEffectInput(e.target.value); setSelectedValue(e.target.value)}}>
+        <option></option>
+        {availableEffects.map(item => (
+          <option key={item} value={item}>{item}</option>
+        ))}
+      </select>
       <button className='add' onClick={addEffect}>+</button>
     </div>
-    <div>
-      {effectItems.map(item => (
+    <div className='box'>
+      {effectBox.map(item => (
           <Effect 
             key={item.id} 
             id={item.id} 

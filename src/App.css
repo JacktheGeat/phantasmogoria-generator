@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
 }
-.row {
+.node {
   flex: 1 1 33%;
   display: flex;
   align-content: left;
@@ -34,7 +34,7 @@
   justify-content: space-between;
 }
 
-.attributeBox {
+.attributeBox, .effectBox {
   background-color: #9bd464;
   border: 1px dotted black;
   padding: 5px;
