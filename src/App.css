@@ -44,6 +44,14 @@
   grid-template-columns: 50px minmax(50px, 170px) 0.5fr;
 }
 
+.resultsBox {
+  display: flex;
+}
+
+.resultsText {
+  flex-grow: 1;
+}
+
 a {
   text-align: left;
 }

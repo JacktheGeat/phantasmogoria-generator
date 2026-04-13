@@ -7,12 +7,18 @@ import SpellClass from './SpellClass';
 import SpellName from './SpellName';
 import Texture from './Texture';
 import Rarity from './Rarity';
+import SpellID from './SpellID';
+import Results from './results';
 
 export default App;
 
 function App() {
+  const [showRarity, setShowRarity] = useState(false);
 
   const  setSpellClass = (newClass) => {
+
+    if (newClass == '' || newClass == 'status') setShowRarity(false);
+    else setShowRarity(true);
     setDisplayJSON(displayJSON.map(item => 
       item.id === 'class' ? { ...item, value: newClass } : item ))
   }
@@ -22,27 +28,64 @@ function App() {
               item.id === 'rarity' ? { ...item, value: newRarity } : item
     ))}
 
-  const [spellName, setSpellName] = useState('');
+  const setSpellName = (newName) =>{
+    setDisplayJSON(displayJSON.map(item => 
+              item.id === 'name' ? { ...item, value: newName } : item
+    ))}
+
+  const setSpellID = (newID) =>{
+    setDisplayJSON(displayJSON.map(item => 
+              item.id === 'id' ? { ...item, value: newID } : item
+    ))}
+
 
   const [displayJSON, setDisplayJSON] = useState(
     [
+      {id:'id', value: ''},
       {id: 'name', value: ''},
-      {id: 'class', value: 'test'},
-      {id: 'rarity', value: 'null'},
-      {id: 'attributes', value: []},
+      {id: 'class', value: ''},
+      {id: 'rarity', value: ''},
+      {id: 'attributes', value: [{id: 'base_power', value: 6}, {id: 'mana_cost', value: 6}]},
       {id: 'effects', value: []}
     ]
   )
+
+  const formatJSON = (inputElement, indentLevel = 0) => {
+    if (indentLevel == 1) {
+      return inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1))
+    }
+    if (typeof inputElement == 'string') {
+      return '"' + inputElement +'"';
+    }
+    else if (typeof inputElement == 'number') {
+      return inputElement;
+    }
+    else if (inputElement.constructor.name == "Array") {
+      return "[" + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1)) +"\n" +  "    ".repeat(indentLevel-1)+"]"
+    }
+    else if (inputElement.constructor.name == "Object") {
+      return "{" + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1)) +"\n" +  "    ".repeat(indentLevel-1)+"}"
+    }
+    else return typeof inputElement
+    }
+
+  const getDisplayJSON = () => {
+    return (
+      "{" + 
+      formatJSON(
+        displayJSON.filter(item => (item.id !== 'rarity' || showRarity)), 
+        1
+      ) + 
+      "\n}"
+    )
+  }
 
 
   return (
     <>
       <h1>Json generator</h1>
       <div className="container" id="generator">
-        <div className="node">
-          <a className="nodeName">ID: </a>
-          <input  name="id" id="id"/>
-        </div>
+        <SpellID setSpellID={setSpellID}/>
 
         <SpellName setSpellName={setSpellName}/>
 
@@ -53,10 +96,7 @@ function App() {
         <Effects/>
         <Texture/>
       </div>
-      <div className='resultsBox'>
-        <textarea wrap="{off}" autoCorrect="{off}" autoCapitalize="{none}" spellCheck="{false}" readOnly="{true}" value={displayJSON.map(item => "\n" + item.id + ': ' + item.value)}>
-        </textarea>
-      </div>
+      <Results getDisplayJSON={getDisplayJSON}/>
     </>
   )
 }

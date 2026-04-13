@@ -43,7 +43,7 @@ const Attribute = ({ id, attributeClass, onRemove }) => {
 
 export default Attributes;
 
-function Attributes({attributeJSON}) {
+function Attributes({displayJSON, setDisplayJSON}) {
   const [selectedValue, setSelectedValue] = useState();
   const availableAttributes = ['base_power', 'mana_cost', 'mana_overcharge', 'mana_curve', 'exhaust_limit', 'expunge_limit', 'power_multiplier', 'cost_multiplier', 'overcharge_multiplier', 'base_amount', 'consumability' ];
   const [attributeBox, setAttributeBox] = useState([]);
