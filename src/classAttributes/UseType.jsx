@@ -47,13 +47,13 @@ function useType(displayJSON, setJSON) {
             setJSON(items => items.filter((item) => item.id !== 'use_limit'));
         }
         else if (displayJSON.some(item => item.id === 'use_limit')) {
-            setLimit(Number(newValue));
+            setLimit(parseInt(Number(newValue)));
             setJSON(items => items.map(item => 
-                item.id === 'use_limit' ? { ...item, value: Number(newValue) } : item))
+                item.id === 'use_limit' ? { ...item, value: parseInt(Number(newValue)) } : item))
         }
         else {
-            setLimit(Number(newValue));
-            setJSON(items => [...new Set([...items, {id: "use_limit", value: Number(newValue)} ])])
+            setLimit(parseInt(Number(newValue)));
+            setJSON(items => [...new Set([...items, {id: "use_limit", value: parseInt(Number(newValue))} ])])
         }
     }
 
