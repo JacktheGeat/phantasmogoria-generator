@@ -11,7 +11,7 @@ function Results({getDisplayJSON}) {
         textareaRef.current.style.height = 'auto';
         textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-    }, [1]);
+    });
     
     return (
         <div className='resultsBox'>
@@ -19,7 +19,7 @@ function Results({getDisplayJSON}) {
             className='resultsText' 
             autoCorrect="{off}" autoCapitalize="{none}" spellCheck="{false}" readOnly="{true}" 
             ref={textareaRef}
-            style={{overflow: 'hidden', resize: 'none'}}
+            style={{overflow: 'shown', resize: 'none'}}
             value={getDisplayJSON()}>
             </textarea>
       </div>

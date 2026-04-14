@@ -6,27 +6,12 @@ import Effects from './Effect';
 import SpellClass from './SpellClass';
 import SpellName from './SpellName';
 import Texture from './Texture';
-import Rarity from './Rarity';
 import SpellID from './SpellID';
 import Results from './results';
 
 export default App;
 
 function App() {
-  const [showRarity, setShowRarity] = useState(false);
-
-  const  setSpellClass = (newClass) => {
-
-    if (newClass == '' || newClass == 'status') setShowRarity(false);
-    else setShowRarity(true);
-    setDisplayJSON(displayJSON.map(item => 
-      item.id === 'class' ? { ...item, value: newClass } : item ))
-  }
-
-  const setRarity = (newRarity) =>{
-    setDisplayJSON(displayJSON.map(item => 
-              item.id === 'rarity' ? { ...item, value: newRarity } : item
-    ))}
 
   const setSpellName = (newName) =>{
     setDisplayJSON(displayJSON.map(item => 
@@ -44,7 +29,6 @@ function App() {
       {id:'id', value: ''},
       {id: 'name', value: ''},
       {id: 'class', value: ''},
-      {id: 'rarity', value: ''},
       {id: 'attributes', value: [{id: 'base_power', value: 6}, {id: 'mana_cost', value: 6}]},
       {id: 'effects', value: []}
     ]
@@ -71,12 +55,7 @@ function App() {
 
   const getDisplayJSON = () => {
     return (
-      "{" + 
-      formatJSON(
-        displayJSON.filter(item => (item.id !== 'rarity' || showRarity)), 
-        1
-      ) + 
-      "\n}"
+      "{" + formatJSON(displayJSON.filter(item => item.id), 1) + "\n}"
     )
   }
 
@@ -89,8 +68,7 @@ function App() {
 
         <SpellName setSpellName={setSpellName}/>
 
-        <SpellClass setSpellClass={setSpellClass}/>
-        <Rarity displayJSON={displayJSON} setRarity={setRarity}/>
+        <SpellClass displayJSON={displayJSON} setJSON={setDisplayJSON}/>
 
         <Attributes/>
         <Effects/>

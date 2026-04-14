@@ -25,6 +25,9 @@
   justify-content: flex-start;
   margin: 10px
 }
+.node .node {
+  padding-left: 10px;
+}
 
 .box { 
   background-color: #b0e77c;
