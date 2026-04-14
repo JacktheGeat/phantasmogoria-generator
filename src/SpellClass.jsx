@@ -4,6 +4,7 @@ import './App.css'
 import baseAttributes from './classAttributes/Base';
 import sigilAttributes from './classAttributes/Sigil';
 import augmentAttributes from './classAttributes/Augment';
+import statusAttributes from './classAttributes/Status';
 import useType from './classAttributes/UseType'
 
 export default SpellClass;
@@ -12,6 +13,7 @@ function SpellClass({displayJSON, setJSON}) {
     const base = baseAttributes(displayJSON, setJSON);
     const sigil = sigilAttributes(displayJSON,setJSON);
     const augment = augmentAttributes(displayJSON,setJSON);
+    const status = statusAttributes(displayJSON,setJSON)
     const exhaustType = useType(displayJSON,setJSON);
 
     const [spellClass, setClass] = useState();
@@ -24,6 +26,7 @@ function SpellClass({displayJSON, setJSON}) {
       base.update(newClass);
       sigil.update(newClass);
       augment.update(newClass);
+      status.update(newClass);
       exhaustType.update(newClass);
     }
 
@@ -89,6 +92,7 @@ function SpellClass({displayJSON, setJSON}) {
               {sigil.display()}
               {augment.display()}
               {exhaustType.display()}
+              {status.display()}
               {rarity()}
             </div>
 

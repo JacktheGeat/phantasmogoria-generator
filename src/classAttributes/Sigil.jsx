@@ -41,6 +41,9 @@ function spellAttributes(displayJSON, setJSON) {
             setCurve(newValue)
             setJSON(items => [...items, {id: "mana_curve", value: newValue }])
         }
+
+        if (newValue == 'fixed') {handleSetOC(0)}
+        else {handleSetOC(overcharge)}
     }
 
     const handleSetPower = (newValue) =>{
@@ -91,9 +94,9 @@ function spellAttributes(displayJSON, setJSON) {
 
     function inputOC() {
         if (curve == 'fixed') {
-            return <input disabled type="number" inputmode="numeric" step='0.01' id="base_power" value={0} onChange={e => handleSetOC(e.target.value)}/>;
+            return <input disabled type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
         }
-        return <input type="number" inputmode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
+        return <input type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
     }
 
     function display() {
@@ -111,7 +114,7 @@ function spellAttributes(displayJSON, setJSON) {
                     </div>
                     <div className="node">
                         <a className="nodeName">Base Power: </a>
-                        <input type="number" inputmode="numeric" step='1' id="base_power" value={power} onChange={e => handleSetPower(e.target.value)}/>
+                        <input type="number" inputMode="numeric" step='1' id="base_power" value={power} onChange={e => handleSetPower(e.target.value)}/>
                     </div>
                     <div className="node">
                         <a className="nodeName">Mana Curve: </a>

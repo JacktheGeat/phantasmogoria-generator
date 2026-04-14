@@ -15,6 +15,7 @@ function useType(displayJSON, setJSON) {
 
     function reset() {
         handleSetUseType('');
+        handleLimit('null');
     }
     function init() {
         handleSetUseType(useType);
@@ -33,6 +34,9 @@ function useType(displayJSON, setJSON) {
             setUseType(newValue)
             setJSON(items => [...items, {id: "use_type", value: newValue }])
         }
+
+        if (newValue == 'standard') {handleLimit(0)}
+        else {handleLimit(limit)}
     }
 
     function inputLimit() {
@@ -43,6 +47,7 @@ function useType(displayJSON, setJSON) {
     }
 
     const handleLimit = (newValue) =>{
+        console.log("modified")
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'use_limit'));
         }

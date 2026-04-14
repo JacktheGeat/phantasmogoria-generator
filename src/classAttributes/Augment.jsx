@@ -9,14 +9,14 @@ function augmentAttributes(displayJSON, setJSON) {
     const [consumability, setConsume] = useState('refreshing')
 
     function update(newClass) {
-        if (newClass !== 'augment') {reset()}
-        else {init()};
+        if (newClass == 'augment') {init()}
+        else {reset()};
     }
 
     function reset() {
         console.log('reset')
         handleSetAmount('null');
-        handleSetConsume('refreshing');
+        handleSetConsume('');
     }
     function init() {
         console.log('init')

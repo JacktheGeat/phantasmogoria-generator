@@ -38,7 +38,10 @@ function App() {
     if (indentLevel == 1) {
       return inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1))
     }
-    if (typeof inputElement == 'string') {
+    if (typeof inputElement == 'boolean') {
+      return '"' + inputElement +'"';
+    }
+    else if (typeof inputElement == 'string') {
       return '"' + inputElement +'"';
     }
     else if (typeof inputElement == 'number') {
