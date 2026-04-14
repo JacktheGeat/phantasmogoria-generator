@@ -1,58 +1,112 @@
 import '../App.css'
+import {useState} from 'react';
 
 export default spellAttributes;
 
 function spellAttributes(displayJSON, setJSON) {
+    const [curve, setCurve] = useState('fixed')
+    const [cost, setCost] = useState(0)
+    const [power, setPower] = useState(0)
+    const [overcharge, setOvercharge] = useState(0)
 
     function reset() {
-        setCurve('');
-        setCost('');
-        setPower('');
+        handleSetCurve('');
+        handleSetCost('null');
+        handleSetPower('null');
+        handleSetOC('null')
     }
 
-    const setCurve = (newValue) =>{
+    function init() {
+        handleSetCost(cost);
+        handleSetPower(power);
+        handleSetCurve(curve);
+        handleSetOC(overcharge);
+    }
+
+    const handleSetCurve = (newValue) =>{
+        console.log(newValue);
         const CurveExists = displayJSON.some(item => item.id === 'mana_curve')
         if ( newValue == '') {
-        setJSON(items => items.filter((item) => item.id !== 'mana_curve'));
+            setJSON(items => items.filter((item) => item.id !== 'mana_curve'));
         }
         else if (CurveExists) {
-        setJSON(items => items.map(item => 
-            item.id === 'mana_curve' ? { ...item, value: Number(newValue) } : item
-        ))
+            setCurve(newValue)
+            setJSON(items => items.map(item => 
+                item.id === 'mana_curve' ? { ...item, value: newValue } : item ))
         }
         else {
-        setJSON([...displayJSON, {id: "mana_curve", value: Number(newValue) }])
+            setCurve(newValue)
+            setJSON(items => [...items, {id: "mana_curve", value: newValue }])
+        }
+        if (newValue == 'fixed') {
+            handleSetOC(0)
         }
     }
 
-    const setPower = (newValue) =>{
+    const handleSetPower = (newValue) =>{
+        console.log(newValue);
+        console.log(power);
         const powerExists = displayJSON.some(item => item.id === 'base_power')
-        if ( newValue == '') {
+        if ( newValue == 'null') {
         setJSON(items => items.filter((item) => item.id !== 'base_power'));
         }
+        else if (typeof parseInt(Number(newValue)) == 'string') {
+            
+        }
         else if (powerExists) {
-        setJSON(items => items.map(item => 
-            item.id === 'base_power' ? { ...item, value: Number(newValue) } : item
-        ))
+            setPower(parseInt(Number(newValue)))
+            setJSON(items => items.map(item => 
+                item.id === 'base_power' ? { ...item, value: parseInt(Number(newValue)) } : item))
         }
         else {
-        setJSON([...displayJSON, {id: "base_power", value: Number(newValue) }])
+            setPower(parseInt(Number(newValue)))
+            setJSON(items => [...items, {id: "base_power", value: parseInt(Number(newValue)) }])
         }
     }
 
-    const setCost = (newValue) =>{
+    const handleSetCost = (newValue) =>{
         const costExists = displayJSON.some(item => item.id === 'mana_cost')
-        if ( newValue == '') {
-        setJSON(items => items.filter((item) => item.id !== 'mana_cost'));
+        if ( newValue == 'null') {
+            setJSON(items => items.filter((item) => item.id !== 'mana_cost'));
+        }
+        else if (typeof parseInt(Number(newValue)) == 'string') {
+            
         }
         else if (costExists) {
-        setJSON(items => items.map(item => 
-            item.id === 'mana_cost' ? { ...item, value: Number(newValue) } : item
-        ))
+            setCost(parseInt(Number(newValue)));
+            setJSON(items => items.map(item => 
+                item.id === 'mana_cost' ? { ...item, value: parseInt(Number(newValue)) } : item))
         }
         else {
-        setJSON([...displayJSON, {id: "mana_cost", value: Number(newValue) }])
+            setCost(parseInt(Number(newValue)));
+            setJSON(items => [...items, {id: "mana_cost", value: parseInt(Number(newValue)) }])
         }
+    }
+
+    const handleSetOC = (newValue) =>{
+        const costExists = displayJSON.some(item => item.id === 'overcharge')
+        if ( newValue == 'null') {
+            setJSON(items => items.filter((item) => item.id !== 'overcharge'));
+        }
+        else if (typeof Number(newValue) == 'string') {
+            
+        }
+        else if (costExists) {
+            setOvercharge(Number(newValue));
+            setJSON(items => items.map(item => 
+                item.id === 'overcharge' ? { ...item, value: Number(newValue) } : item))
+        }
+        else {
+            setOvercharge(Number(newValue));
+            setJSON(items => [...items, {id: "overcharge", value: Number(newValue) }])
+        }
+    }
+
+    function inputOC() {
+        if (curve == 'fixed') {
+            return <input disabled type="number" inputmode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
+        }
+        return <input type="number" inputmode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
     }
 
     function display() {
@@ -62,34 +116,32 @@ function spellAttributes(displayJSON, setJSON) {
         }
 
         else {
-            const costExists = displayJSON.some(item => item.id === 'mana_cost')
-            let currentCost = 0;
-            if (costExists) { currentCost = displayJSON.filter( item => (item.id == 'mana_cost'))[0].value;}
-            else currentCost = 0;
-
-            const powerExists = displayJSON.some(item => item.id === 'base_power')
-            let currentPower = 0;
-            if (powerExists) { currentPower = displayJSON.filter( item => (item.id == 'base_power'))[0].value;}
-            else currentPower = 0;
-
-        
             return (
                 <>
-                <div className="node">
-                <a className="nodeName">Mana Cost: </a>
-                <input type="number" step='0.1' id="mana_cost" value={currentCost} onChange={e => setCost(e.target.value)}/>
-                </div>
-                <div className="node">
-                <a className="nodeName">Base Power: </a>
-                <input type="number" step='1' id="base_power" value={currentPower} onChange={e => setPower(e.target.value)}/>
-                </div>
-                <div className="node">
-                <a className="nodeName">Mana Curve: </a>
-                </div>
+                    <div className="node">
+                        <a className="nodeName">Mana Cost: </a>
+                        <input type="number" step='1' id="mana_cost" value={cost} onChange={e => handleSetCost(e.target.value)}/>
+                    </div>
+                    <div className="node">
+                        <a className="nodeName">Base Power: </a>
+                        <input type="number" inputmode="numeric" step='1' id="base_power" value={power} onChange={e => handleSetPower(e.target.value)}/>
+                    </div>
+                    <div className="node">
+                        <a className="nodeName">Mana Curve: </a>
+                        <select  name="class" id="class" value={curve} onChange={e => handleSetCurve(e.target.value)}>
+                            <option value="fixed">Fixed</option>
+                            <option value="linear">Linear</option>
+                            <option value="exponential">Exponential</option>
+                        </select>
+                    </div>
+                    <div className="node">
+                        <a className="nodeName">Overcharge: </a>
+                        {inputOC()}
+                    </div>
                 </>
             );
         }
     }
 
-    return {reset, display}
+    return {reset, init, display}
 }

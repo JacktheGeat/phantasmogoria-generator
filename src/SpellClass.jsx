@@ -9,29 +9,36 @@ export default SpellClass;
 function SpellClass({displayJSON, setJSON}) {
     const base = baseAttributes(displayJSON, setJSON);
     const sigil = sigilAttributes(displayJSON,setJSON);
+
     function setSpellClass(newClass) {
-      setJSON(displayJSON.map(item => 
+      console.log(newClass);
+      setJSON((items) => items.map(item => 
         item.id === 'class' ? { ...item, value: newClass } : item ));
       if (newClass == '') {
         setRarity('');
-        base.reset()
+        base.reset();
+        sigil.reset();
       }
       else if (newClass == 'base') {
-
+        sigil.reset();
+        base.init();
       }
       else if (newClass == 'sigil') {
-        base.reset()
-
+        sigil.init();
+        base.reset();
       }
       else if (newClass == 'augment') {
-        base.reset()
+        base.reset();
+        sigil.reset();
       }
       else if (newClass == 'status') {
         setRarity('');
-        base.reset()
+        base.reset();
+        sigil.reset();
       }
       else if (newClass == 'artifact') {
-        base.reset()
+        base.reset();
+        sigil.reset();
       }
     }
 
@@ -46,7 +53,7 @@ function SpellClass({displayJSON, setJSON}) {
         ))
       }
       else {
-        setJSON([...displayJSON, {id: "rarity", value: newRarity }])
+        setJSON(items => [...items, {id: "rarity", value: newRarity }])
       }
     }
     const rarity = () => {
