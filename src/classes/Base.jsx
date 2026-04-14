@@ -7,6 +7,11 @@ export default baseAttributes;
 function baseAttributes(displayJSON, setJSON) {
     const [growthRate, setGR] = useState(0)
 
+    function update(newClass) {
+        if (newClass !== 'base') {reset()}
+        else {init()};
+    }
+
     function reset() {
         handleSetGR('null');
     }
@@ -17,9 +22,6 @@ function baseAttributes(displayJSON, setJSON) {
     const handleSetGR = (newValue) =>{
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'growth_rate'));
-        }
-        else if (typeof parseInt(Number(newValue)) == 'string') {
-            
         }
         else if (displayJSON.some(item => item.id === 'growth_rate')) {
             setGR(Number(newValue));
@@ -47,5 +49,5 @@ function baseAttributes(displayJSON, setJSON) {
         }
     }
 
-    return {reset,init, display}
+    return {update, display}
 }

@@ -9,6 +9,12 @@ function spellAttributes(displayJSON, setJSON) {
     const [power, setPower] = useState(0)
     const [overcharge, setOvercharge] = useState(0)
 
+
+    function update(newClass) {
+        if (newClass !== 'sigil') {reset()}
+        else {init()};
+    }
+
     function reset() {
         handleSetCurve('');
         handleSetCost('null');
@@ -41,15 +47,10 @@ function spellAttributes(displayJSON, setJSON) {
     }
 
     const handleSetPower = (newValue) =>{
-        console.log(power);
-        const powerExists = displayJSON.some(item => item.id === 'base_power')
         if ( newValue == 'null') {
         setJSON(items => items.filter((item) => item.id !== 'base_power'));
         }
-        else if (typeof parseInt(Number(newValue)) == 'string') {
-            
-        }
-        else if (powerExists) {
+        else if (displayJSON.some(item => item.id === 'base_power')) {
             setPower(parseInt(Number(newValue)))
             setJSON(items => items.map(item => 
                 item.id === 'base_power' ? { ...item, value: parseInt(Number(newValue)) } : item))
@@ -64,9 +65,6 @@ function spellAttributes(displayJSON, setJSON) {
         const costExists = displayJSON.some(item => item.id === 'mana_cost')
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'mana_cost'));
-        }
-        else if (typeof parseInt(Number(newValue)) == 'string') {
-            
         }
         else if (costExists) {
             setCost(parseInt(Number(newValue)));
@@ -83,16 +81,12 @@ function spellAttributes(displayJSON, setJSON) {
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'overcharge'));
         }
-        else if (typeof Number(newValue) == 'string') {
-            
-        }
         else if (displayJSON.some(item => item.id === 'overcharge')) {
             setOvercharge(Number(newValue));
             setJSON(items => items.map(item => 
                 item.id === 'overcharge' ? { ...item, value: Number(newValue) } : item))
         }
         else {
-            console.log("set overcharge")
             setOvercharge(Number(newValue));
             setJSON(items => [...new Set([...items, {id: "overcharge", value: Number(newValue)} ])])
         }
@@ -139,5 +133,5 @@ function spellAttributes(displayJSON, setJSON) {
         }
     }
 
-    return {reset, init, display}
+    return {update, display}
 }

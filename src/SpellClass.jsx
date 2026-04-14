@@ -3,43 +3,25 @@ import {React, useState } from 'react';
 import './App.css'
 import baseAttributes from './classes/Base';
 import sigilAttributes from './classes/Sigil';
+import augmentAttributes from './classes/Augment';
 
 export default SpellClass;
 
 function SpellClass({displayJSON, setJSON}) {
     const base = baseAttributes(displayJSON, setJSON);
     const sigil = sigilAttributes(displayJSON,setJSON);
+    const augment = augmentAttributes(displayJSON,setJSON);
 
-    function setSpellClass(newClass) {
+    const [spellClass, setClass] = useState();
+
+    function handleClass(newClass) {
       console.log(newClass);
       setJSON((items) => items.map(item => 
         item.id === 'class' ? { ...item, value: newClass } : item ));
-      if (newClass == '') {
-        setRarity('');
-        base.reset();
-        sigil.reset();
-      }
-      else if (newClass == 'base') {
-        sigil.reset();
-        base.init();
-      }
-      else if (newClass == 'sigil') {
-        sigil.init();
-        base.reset();
-      }
-      else if (newClass == 'augment') {
-        base.reset();
-        sigil.reset();
-      }
-      else if (newClass == 'status') {
-        setRarity('');
-        base.reset();
-        sigil.reset();
-      }
-      else if (newClass == 'artifact') {
-        base.reset();
-        sigil.reset();
-      }
+      setClass(newClass);
+      base.update(newClass);
+      sigil.update(newClass);
+      augment.update(newClass);
     }
 
     const setRarity = (newRarity) =>{
@@ -90,7 +72,7 @@ function SpellClass({displayJSON, setJSON}) {
         <>
             <div className="node">
                 <a className="nodeName">Class: </a>
-                <select  name="class" id="class" onChange={e => setSpellClass(e.target.value)}>
+                <select  name="class" id="class" value={spellClass} onChange={e => handleClass(e.target.value)}>
                     <option value=''></option>
                     <option value="base">Base</option>
                     <option value="sigil">Sigil</option>
@@ -101,6 +83,7 @@ function SpellClass({displayJSON, setJSON}) {
             </div>
             {base.display()}
             {sigil.display()}
+            {augment.display()}
             {rarity()}
 
         </>
