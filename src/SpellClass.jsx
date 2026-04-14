@@ -1,9 +1,10 @@
 import {React, useState } from 'react';
 
 import './App.css'
-import baseAttributes from './classes/Base';
-import sigilAttributes from './classes/Sigil';
-import augmentAttributes from './classes/Augment';
+import baseAttributes from './classAttributes/Base';
+import sigilAttributes from './classAttributes/Sigil';
+import augmentAttributes from './classAttributes/Augment';
+import useType from './classAttributes/UseType'
 
 export default SpellClass;
 
@@ -11,6 +12,7 @@ function SpellClass({displayJSON, setJSON}) {
     const base = baseAttributes(displayJSON, setJSON);
     const sigil = sigilAttributes(displayJSON,setJSON);
     const augment = augmentAttributes(displayJSON,setJSON);
+    const exhaustType = useType(displayJSON,setJSON);
 
     const [spellClass, setClass] = useState();
 
@@ -22,6 +24,7 @@ function SpellClass({displayJSON, setJSON}) {
       base.update(newClass);
       sigil.update(newClass);
       augment.update(newClass);
+      exhaustType.update(newClass);
     }
 
     const setRarity = (newRarity) =>{
@@ -81,10 +84,13 @@ function SpellClass({displayJSON, setJSON}) {
                     <option value="artifact">Artifact</option>
                 </select>
             </div>
-            {base.display()}
-            {sigil.display()}
-            {augment.display()}
-            {rarity()}
+            <div className='container' style={{paddingLeft: '20px'}}>
+              {base.display()}
+              {sigil.display()}
+              {augment.display()}
+              {exhaustType.display()}
+              {rarity()}
+            </div>
 
         </>
     )

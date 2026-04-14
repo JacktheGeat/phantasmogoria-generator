@@ -41,9 +41,6 @@ function spellAttributes(displayJSON, setJSON) {
             setCurve(newValue)
             setJSON(items => [...items, {id: "mana_curve", value: newValue }])
         }
-        if (newValue == 'fixed') {
-            handleSetOC(0)
-        } else {handleSetOC(overcharge)}
     }
 
     const handleSetPower = (newValue) =>{
@@ -94,7 +91,7 @@ function spellAttributes(displayJSON, setJSON) {
 
     function inputOC() {
         if (curve == 'fixed') {
-            return <input disabled type="number" inputmode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
+            return <input disabled type="number" inputmode="numeric" step='0.01' id="base_power" value={0} onChange={e => handleSetOC(e.target.value)}/>;
         }
         return <input type="number" inputmode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
     }
@@ -124,9 +121,11 @@ function spellAttributes(displayJSON, setJSON) {
                             <option value="exponential">Exponential</option>
                         </select>
                     </div>
-                    <div className="node">
-                        <a className="nodeName">Overcharge: </a>
-                        {inputOC()}
+                    <div className='container' style={{paddingLeft: '20px'}}>
+                        <div className="node">
+                            <a className="nodeName">Overcharge: </a>
+                            {inputOC()}
+                        </div>
                     </div>
                 </>
             );
