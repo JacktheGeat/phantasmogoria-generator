@@ -6,20 +6,29 @@ export default augmentAttributes;
 
 function augmentAttributes(displayJSON, setJSON) {
     const [amount, setAmount] = useState(0)
+    const [consumability, setConsume] = useState('refreshing')
+
+    function update(newClass) {
+        if (newClass !== 'augment') {reset()}
+        else {init()};
+    }
 
     function reset() {
+        console.log('reset')
         handleSetAmount('null');
+        handleSetConsume('refreshing');
     }
     function init() {
+        console.log('init')
         handleSetAmount(amount);
+        handleSetConsume(consumability);
     }
 
     const handleSetAmount = (newValue) =>{
+        console.log(newValue)
         if ( newValue == 'null') {
+            console.log('null')
             setJSON(items => items.filter((item) => item.id !== 'amount'));
-        }
-        else if (typeof parseInt(Number(newValue)) == 'string') {
-            
         }
         else if (displayJSON.some(item => item.id === 'amount')) {
             setAmount(parseInt(Number(newValue)));
@@ -32,20 +41,45 @@ function augmentAttributes(displayJSON, setJSON) {
         }
     }
 
+    const handleSetConsume = (newValue) =>{
+        if ( newValue == '') {
+            setJSON(items => items.filter((item) => item.id !== 'consumability'));
+        }
+        else if (displayJSON.some(item => item.id === 'consumability')) {
+            setConsume(newValue)
+            setJSON(items => items.map(item => 
+                item.id === 'consumability' ? { ...item, value: newValue } : item ))
+        }
+        else {
+            setConsume(newValue)
+            setJSON(items => [...items, {id: "consumability", value: newValue }])
+        }
+    }
+
     function display() {
         const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'base') {
+        if (spellClass.toString() !== 'augment') {
             return <></>
         }
         else {
             return (
-                <div className="node">
-                <a className="nodeName">Amount: </a>
-                <input type="number" step='1' id="growth_rate" value={growthRate} onChange={e => handleSetGR(e.target.value)}/>
-                </div>
+                <>
+                    <div className="node">
+                        <a className="nodeName">Amount: </a>
+                        <input type="number" step='1' id="amount" value={amount} onChange={e => handleSetAmount(e.target.value)}/>
+                    </div>
+                    <div className="node">
+                        <a className="nodeName">Consumability: </a>
+                        <select id="consumability" value={consumability} onChange={e => handleSetConsume(e.target.value)}>
+                            <option value="Refreshing">Refreshing</option>
+                            <option value="consumable">Consumable</option>
+                            <option value="nonconsumable">Nonconsumable</option>
+                        </select>
+                    </div>
+                </>
             );
         }
     }
 
-    return {reset,init, display}
+    return {update, display}
 }
