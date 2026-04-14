@@ -7,7 +7,7 @@ import SpellClass from './SpellClass';
 import SpellName from './SpellName';
 import Texture from './Texture';
 import SpellID from './SpellID';
-import Results from './results';
+import Results from './Results';
 
 export default App;
 
