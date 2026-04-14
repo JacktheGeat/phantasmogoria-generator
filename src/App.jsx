@@ -29,7 +29,7 @@ function App() {
       {id:'id', value: ''},
       {id: 'name', value: ''},
       {id: 'class', value: ''},
-      {id: 'attributes', value: [{id: 'base_power', value: 6}, {id: 'mana_cost', value: 6}]},
+      {id: 'attributes', value: []},
       {id: 'effects', value: []}
     ]
   )
