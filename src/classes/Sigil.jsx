@@ -20,16 +20,13 @@ function spellAttributes(displayJSON, setJSON) {
         handleSetCost(cost);
         handleSetPower(power);
         handleSetCurve(curve);
-        handleSetOC(overcharge);
     }
 
     const handleSetCurve = (newValue) =>{
-        console.log(newValue);
-        const CurveExists = displayJSON.some(item => item.id === 'mana_curve')
         if ( newValue == '') {
             setJSON(items => items.filter((item) => item.id !== 'mana_curve'));
         }
-        else if (CurveExists) {
+        else if (displayJSON.some(item => item.id === 'mana_curve')) {
             setCurve(newValue)
             setJSON(items => items.map(item => 
                 item.id === 'mana_curve' ? { ...item, value: newValue } : item ))
@@ -40,11 +37,10 @@ function spellAttributes(displayJSON, setJSON) {
         }
         if (newValue == 'fixed') {
             handleSetOC(0)
-        }
+        } else {handleSetOC(overcharge)}
     }
 
     const handleSetPower = (newValue) =>{
-        console.log(newValue);
         console.log(power);
         const powerExists = displayJSON.some(item => item.id === 'base_power')
         if ( newValue == 'null') {
@@ -84,21 +80,21 @@ function spellAttributes(displayJSON, setJSON) {
     }
 
     const handleSetOC = (newValue) =>{
-        const costExists = displayJSON.some(item => item.id === 'overcharge')
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'overcharge'));
         }
         else if (typeof Number(newValue) == 'string') {
             
         }
-        else if (costExists) {
+        else if (displayJSON.some(item => item.id === 'overcharge')) {
             setOvercharge(Number(newValue));
             setJSON(items => items.map(item => 
                 item.id === 'overcharge' ? { ...item, value: Number(newValue) } : item))
         }
         else {
+            console.log("set overcharge")
             setOvercharge(Number(newValue));
-            setJSON(items => [...items, {id: "overcharge", value: Number(newValue) }])
+            setJSON(items => [...new Set([...items, {id: "overcharge", value: Number(newValue)} ])])
         }
     }
 
