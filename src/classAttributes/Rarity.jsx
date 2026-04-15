@@ -5,7 +5,7 @@ import {useState} from 'react';
 export default rarityHandler;
 
 function rarityHandler(setJSON) {
-    const [rarity, setRarity] = useState('')
+    const [rarity, setRarity] = useState('common')
     const [currentClass, setClass] = useState('');
 
     function update(newClass) {
@@ -36,7 +36,6 @@ function rarityHandler(setJSON) {
                     <a className="nodeName">Rarity: </a>
                     <select name='rarity' id="rarity" value={rarity} onChange={
                     e => {handleSetRarity( e.target.value )}}>
-                        <option value=''></option>
                         <option value="basic">Basic</option>
                         <option value="common">Commmon</option>
                         <option value="rare">Rare</option>
