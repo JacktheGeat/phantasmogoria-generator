@@ -4,39 +4,30 @@ import {useState} from 'react';
 
 export default baseAttributes;
 
-function baseAttributes(displayJSON, setJSON) {
-    const [growthRate, setGR] = useState(0)
+function baseAttributes(setJSON) {
+    const [growthRate, setGR] = useState(0);
+    const [currentClass, setClass] = useState('');
 
     function update(newClass) {
+        setClass(newClass)
         if (newClass !== 'base') {reset()}
         else {init()};
     }
 
     function reset() {
-        handleSetGR('null');
+        setJSON('growth_rate', undefined);
     }
     function init() {
-        handleSetGR(growthRate);
+        handleSetGR(growthRate)
     }
 
     const handleSetGR = (newValue) =>{
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'growth_rate'));
-        }
-        else if (displayJSON.some(item => item.id === 'growth_rate')) {
-            setGR(Number(newValue));
-            setJSON(items => items.map(item => 
-                item.id === 'growth_rate' ? { ...item, value: Number(newValue) } : item))
-        }
-        else {
-            setGR(Number(newValue));
-            setJSON(items => [...items, {id: "growth_rate", value: Number(newValue) }])
-        }
+        setGR(Number(newValue))
+        setJSON('growth_rate', Number(newValue))
     }
 
     function display() {
-        const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'base') {
+        if (currentClass !== 'base') {
             return <></>
         }
         else {

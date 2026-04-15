@@ -2,41 +2,32 @@ import '../App.css'
 import {useState} from 'react';
 
 
-export default baseAttributes;
+export default sizeHandler;
 
-function baseAttributes(displayJSON, setJSON) {
+function sizeHandler(setJSON) {
     const [size, setSize] = useState(0)
+    const [currentClass, setClass] = useState('');
 
     function update(newClass) {
-        if (newClass !== 'base') {reset()}
-        else {init()};
+        setClass(newClass)
+        if (newClass == 'base' || newClass == 'augment' || newClass == 'sigil') {init()}
+        else {reset()};
     }
 
     function reset() {
-        handleSetSize('null');
+        setJSON('size', undefined);
     }
     function init() {
         handleSetSize(size);
     }
 
     const handleSetSize = (newValue) =>{
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'growth_rate'));
-        }
-        else if (displayJSON.some(item => item.id === 'growth_rate')) {
-            setSize(parseInt(Number(newValue)));
-            setJSON(items => items.map(item => 
-                item.id === 'growth_rate' ? { ...item, value: parseInt(Number(newValue)) } : item))
-        }
-        else {
-            setSize(parseInt(Number(newValue)));
-            setJSON(items => [...items, {id: "growth_rate", value: parseInt(Number(newValue)) }])
-        }
+        setSize(parseInt(Number(newValue)))
+        setJSON('size', parseInt(Number(newValue)))
     }
 
     function display() {
-        const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'base') {
+        if (currentClass !== 'base' && currentClass !== 'augment' && currentClass !== 'sigil') {
             return <></>
         }
         else {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 
-import Attributes from './Attribute';
+import Attributes from './AttributeBox';
 import Effects from './Effect';
 import SpellClass from './SpellClass';
 import SpellName from './SpellName';
@@ -23,6 +23,18 @@ function App() {
       {id: 'texture', value: ''}
     ]
   )
+  const handleSetJSON = (target, newValue) =>{
+    if ( newValue == undefined) {
+      setDisplayJSON(items => items.filter((item) => item.id !== target));
+    }
+    else if (displayJSON.some(item => item.id === target)) {
+      setDisplayJSON(items => items.map(item => 
+      item.id === target ? { ...item, value: newValue } : item))
+    }
+    else {
+      setDisplayJSON(items => [...new Set([...items, {id: target, value: newValue} ])])
+    }
+  }
 
   const formatJSON = (inputElement, indentLevel = 0) => {
     if (indentLevel == 1) {
@@ -57,15 +69,15 @@ function App() {
     <>
       <h1>Json generator</h1>
       <div className="container" id="generator">
-        <SpellID setDisplayJSON={setDisplayJSON}/>
+        <SpellID setSpellID={handleSetJSON}/>
 
-        <SpellName setDisplayJSON={setDisplayJSON}/>
+        <SpellName setSpellName={handleSetJSON}/>
 
-        <SpellClass displayJSON={displayJSON} setJSON={setDisplayJSON}/>
+        <SpellClass displayJSON={displayJSON} setJSON={handleSetJSON}/>
 
-        <Attributes/>
+        <Attributes setAttributes={handleSetJSON}/>
         <Effects/>
-        <Texture setDisplayJSON={setDisplayJSON}/>
+        <Texture setTexture={handleSetJSON}/>
       </div>
       <Results getDisplayJSON={getDisplayJSON}/>
     </>

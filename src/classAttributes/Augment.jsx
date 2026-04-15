@@ -4,57 +4,39 @@ import {useState} from 'react';
 
 export default augmentAttributes;
 
-function augmentAttributes(displayJSON, setJSON) {
+function augmentAttributes(setJSON) {
     const [amount, setAmount] = useState(0)
     const [consumability, setConsume] = useState('refreshing')
+    const [currentClass, setClass] = useState('');
 
     function update(newClass) {
-        if (newClass == 'augment') {init()}
-        else {reset()};
+        setClass(newClass)
+        if (newClass !== 'augment') {reset()}
+        else {init()};
     }
 
     function reset() {
-        handleSetAmount('null');
-        handleSetConsume('');
+        setJSON('amount', undefined);
+        setJSON('consumability', undefined);
     }
+    
     function init() {
         handleSetAmount(amount);
         handleSetConsume(consumability);
     }
 
     const handleSetAmount = (newValue) =>{
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'amount'));
-        }
-        else if (displayJSON.some(item => item.id === 'amount')) {
-            setAmount(parseInt(Number(newValue)));
-            setJSON(items => items.map(item => 
-                item.id === 'amount' ? { ...item, value: parseInt(Number(newValue)) } : item))
-        }
-        else {
-            setAmount(parseInt((Number(newValue))));
-            setJSON(items => [...items, {id: "amount", value: parseInt(Number(newValue)) }])
-        }
+        setAmount(parseInt(Number(newValue)));
+        setJSON('amount', parseInt(Number(newValue)))
     }
 
     const handleSetConsume = (newValue) =>{
-        if ( newValue == '') {
-            setJSON(items => items.filter((item) => item.id !== 'consumability'));
-        }
-        else if (displayJSON.some(item => item.id === 'consumability')) {
-            setConsume(newValue)
-            setJSON(items => items.map(item => 
-                item.id === 'consumability' ? { ...item, value: newValue } : item ))
-        }
-        else {
-            setConsume(newValue)
-            setJSON(items => [...items, {id: "consumability", value: newValue }])
-        }
+        setConsume(newValue)
+        setJSON('consumability' , newValue)
     }
 
     function display() {
-        const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'augment') {
+        if (currentClass !== 'augment') {
             return <></>
         }
         else {

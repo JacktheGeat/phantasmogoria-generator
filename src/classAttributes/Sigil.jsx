@@ -3,23 +3,26 @@ import {useState} from 'react';
 
 export default spellAttributes;
 
-function spellAttributes(displayJSON, setJSON) {
+function spellAttributes(setJSON) {
     const [curve, setCurve] = useState('fixed')
     const [cost, setCost] = useState(0)
     const [power, setPower] = useState(0)
     const [overcharge, setOvercharge] = useState(0)
 
+    const [currentClass, setClass] = useState('');
 
     function update(newClass) {
+        setClass(newClass)
         if (newClass !== 'sigil') {reset()}
         else {init()};
     }
 
+
     function reset() {
-        handleSetCurve('');
-        handleSetCost('null');
-        handleSetPower('null');
-        handleSetOC('null')
+        setJSON('mana_curve', undefined);
+        setJSON('base_power', undefined);
+        setJSON('mana_cost', undefined);
+        setJSON('overcharge', undefined);
     }
 
     function init() {
@@ -29,67 +32,26 @@ function spellAttributes(displayJSON, setJSON) {
     }
 
     const handleSetCurve = (newValue) =>{
-        if ( newValue == '') {
-            setJSON(items => items.filter((item) => item.id !== 'mana_curve'));
-        }
-        else if (displayJSON.some(item => item.id === 'mana_curve')) {
-            setCurve(newValue)
-            setJSON(items => items.map(item => 
-                item.id === 'mana_curve' ? { ...item, value: newValue } : item ))
-        }
-        else {
-            setCurve(newValue)
-            setJSON(items => [...items, {id: "mana_curve", value: newValue }])
-        }
+        setCurve(newValue)
+        setJSON('mana_curve', newValue);
 
         if (newValue == 'fixed') {handleSetOC(0)}
         else {handleSetOC(overcharge)}
     }
 
     const handleSetPower = (newValue) =>{
-        if ( newValue == 'null') {
-        setJSON(items => items.filter((item) => item.id !== 'base_power'));
-        }
-        else if (displayJSON.some(item => item.id === 'base_power')) {
-            setPower(parseInt(Number(newValue)))
-            setJSON(items => items.map(item => 
-                item.id === 'base_power' ? { ...item, value: parseInt(Number(newValue)) } : item))
-        }
-        else {
-            setPower(parseInt(Number(newValue)))
-            setJSON(items => [...items, {id: "base_power", value: parseInt(Number(newValue)) }])
-        }
+        setPower(newValue)
+        setJSON('base_power', newValue);
     }
 
     const handleSetCost = (newValue) =>{
-        const costExists = displayJSON.some(item => item.id === 'mana_cost')
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'mana_cost'));
-        }
-        else if (costExists) {
-            setCost(parseInt(Number(newValue)));
-            setJSON(items => items.map(item => 
-                item.id === 'mana_cost' ? { ...item, value: parseInt(Number(newValue)) } : item))
-        }
-        else {
-            setCost(parseInt(Number(newValue)));
-            setJSON(items => [...items, {id: "mana_cost", value: parseInt(Number(newValue)) }])
-        }
+        setCost(newValue)
+        setJSON('mana_cost', newValue);
     }
 
     const handleSetOC = (newValue) =>{
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'overcharge'));
-        }
-        else if (displayJSON.some(item => item.id === 'overcharge')) {
-            setOvercharge(Number(newValue));
-            setJSON(items => items.map(item => 
-                item.id === 'overcharge' ? { ...item, value: Number(newValue) } : item))
-        }
-        else {
-            setOvercharge(Number(newValue));
-            setJSON(items => [...new Set([...items, {id: "overcharge", value: Number(newValue)} ])])
-        }
+        setOvercharge(newValue)
+        setJSON('overcharge', newValue);
     }
 
     function inputOC() {
@@ -100,8 +62,7 @@ function spellAttributes(displayJSON, setJSON) {
     }
 
     function display() {
-        const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'sigil') {
+        if (currentClass !== 'sigil') {
             return <></>
         }
 

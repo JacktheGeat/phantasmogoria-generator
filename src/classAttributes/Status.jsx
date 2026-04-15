@@ -4,36 +4,28 @@ import {useState} from 'react';
 
 export default statusAttributes;
 
-function statusAttributes(displayJSON, setJSON) {
+function statusAttributes(setJSON) {
     const [stackType, setStackType] = useState('none');
     const [isSeparate, setSeparate] = useState(false);
+    const [currentClass, setClass] = useState('');
 
     function update(newClass) {
-        if (newClass == 'status') {init()}
-        else {reset()};
+        setClass(newClass);
+        if (newClass == 'status') {init();}
+        else {reset();}
     }
 
     function reset() {
-        handleSetType('');
-        handleSetSeparate('null');
+        setJSON('stackType', undefined);
+        setJSON('stackSeparate', undefined);
     }
     function init() {
         handleSetType(stackType);
     }
 
     const handleSetType = (newValue) =>{
-        if ( newValue == '') {
-            setJSON(items => items.filter((item) => item.id !== 'stackType'));
-        }
-        else if (displayJSON.some(item => item.id === 'stackType')) {
-            setStackType(newValue)
-            setJSON(items => items.map(item => 
-                item.id === 'stackType' ? { ...item, value: newValue } : item ))
-        }
-        else {
-            setStackType(newValue)
-            setJSON(items => [...items, {id: "stackType", value: newValue }])
-        }
+        setStackType(newValue);
+        setJSON('stackType', newValue)
 
         if (newValue !== 'both') {handleSetSeparate(false)}
         else {handleSetSeparate(isSeparate)}
@@ -57,23 +49,12 @@ function statusAttributes(displayJSON, setJSON) {
     }
 
     const handleSetSeparate = (newValue) =>{
-        if ( newValue == 'null') {
-            setJSON(items => items.filter((item) => item.id !== 'stackSeparate'));
-        }
-        else if (displayJSON.some(item => item.id === 'stackSeparate')) {
-            setSeparate(newValue)
-            setJSON(items => items.map(item => 
-                item.id === 'stackSeparate' ? { ...item, value: newValue } : item ))
-        }
-        else {
-            setSeparate(newValue)
-            setJSON(items => [...items, {id: "stackSeparate", value: newValue }])
-        }
+        setSeparate(newValue);
+        setJSON('stackSeparate', newValue)
     }
 
     function display() {
-        const spellClass = displayJSON.filter( item => (item.id == 'class')).map(item => item.value);
-        if (spellClass.toString() !== 'status') {
+        if (currentClass !== 'status') {
             return <></>
         }
         else {

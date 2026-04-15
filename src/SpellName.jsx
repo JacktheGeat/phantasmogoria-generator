@@ -4,17 +4,12 @@ import './App.css'
 
 export default SpellName;
 
-function SpellName({setDisplayJSON}) {
-
-    const setSpellName = (newName) =>{
-    setDisplayJSON((items) => items.map(item => 
-              item.id === 'name' ? { ...item, value: newName } : item
-    ))}
+function SpellName({setSpellName}) {
     
     return (
         <div className="node">
             <a className="nodeName">Name: </a>
-            <input  name="name" id="name" onChange={e => setSpellName(e.target.value)}/>
+            <input  name="name" id="name" onChange={e => setSpellName('name', e.target.value)}/>
         </div>
     )
 }
