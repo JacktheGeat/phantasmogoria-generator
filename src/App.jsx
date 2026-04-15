@@ -39,7 +39,7 @@ function App() {
       return inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1))
     }
     if (typeof inputElement == 'boolean') {
-      return '"' + inputElement +'"';
+      return  inputElement;
     }
     else if (typeof inputElement == 'string') {
       return '"' + inputElement +'"';

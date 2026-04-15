@@ -14,12 +14,10 @@ function augmentAttributes(displayJSON, setJSON) {
     }
 
     function reset() {
-        console.log('reset')
         handleSetAmount('null');
         handleSetConsume('');
     }
     function init() {
-        console.log('init')
         handleSetAmount(amount);
         handleSetConsume(consumability);
     }

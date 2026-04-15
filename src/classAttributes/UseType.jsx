@@ -47,7 +47,6 @@ function useType(displayJSON, setJSON) {
     }
 
     const handleLimit = (newValue) =>{
-        console.log("modified")
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'use_limit'));
         }

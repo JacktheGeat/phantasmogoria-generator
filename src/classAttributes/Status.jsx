@@ -6,7 +6,7 @@ export default statusAttributes;
 
 function statusAttributes(displayJSON, setJSON) {
     const [stackType, setStackType] = useState('none');
-    const [stackSeparate, setStackSeparate] = useState(false);
+    const [isSeparate, setSeparate] = useState(false);
 
     function update(newClass) {
         if (newClass == 'status') {init()}
@@ -15,11 +15,10 @@ function statusAttributes(displayJSON, setJSON) {
 
     function reset() {
         handleSetType('');
-        handleStackSeparate('null');
+        handleSetSeparate('null');
     }
     function init() {
         handleSetType(stackType);
-        handleStackSeparate(stackSeparate);
     }
 
     const handleSetType = (newValue) =>{
@@ -35,39 +34,39 @@ function statusAttributes(displayJSON, setJSON) {
             setStackType(newValue)
             setJSON(items => [...items, {id: "stackType", value: newValue }])
         }
+
+        if (newValue !== 'both') {handleSetSeparate(false)}
+        else {handleSetSeparate(isSeparate)}
     }
 
-    function Separate() {
+    function SeparateButton() {
         if (stackType == 'both') {
             return (
                 <>
                     <label htmlFor="stackSeparate">Stack Separately: </label>
-                    <input type="checkbox" id="stackSeparate" name="stackSeparate" checked={stackSeparate} onChange={e => handleStackSeparate(e.target.checked)}/>;
+                    <input type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>;
                 </>
                 )
         }
         return (
             <>
                     <label htmlFor="stackSeparate">Stack Separately: </label>
-                    <input disabled type="checkbox" id="stackSeparate" name="stackSeparate" checked={stackSeparate} onChange={e => handleStackSeparate(e.target.checked)}/>;
+                    <input disabled type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>;
                 </>
         )
     }
 
-    const handleStackSeparate = (newValue) =>{
-        console.log("new value=" + newValue + " type: " + (typeof newValue))
+    const handleSetSeparate = (newValue) =>{
         if ( newValue == 'null') {
             setJSON(items => items.filter((item) => item.id !== 'stackSeparate'));
         }
         else if (displayJSON.some(item => item.id === 'stackSeparate')) {
-            console.log("found")
-            setStackSeparate(newValue)
+            setSeparate(newValue)
             setJSON(items => items.map(item => 
                 item.id === 'stackSeparate' ? { ...item, value: newValue } : item ))
         }
         else {
-            console.log("not found")
-            setStackSeparate(newValue)
+            setSeparate(newValue)
             setJSON(items => [...items, {id: "stackSeparate", value: newValue }])
         }
     }
@@ -91,8 +90,8 @@ function statusAttributes(displayJSON, setJSON) {
                     </div>
                     <div className='container' style={{paddingLeft: '20px'}}>
                         <div className="node">
-                            <a>{stackSeparate}</a>
-                            <Separate/>
+                            <a>{isSeparate}</a>
+                            <SeparateButton/>
                         </div>
                     </div>
                 </>
