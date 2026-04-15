@@ -23,9 +23,7 @@ function augmentAttributes(displayJSON, setJSON) {
     }
 
     const handleSetAmount = (newValue) =>{
-        console.log(newValue)
         if ( newValue == 'null') {
-            console.log('null')
             setJSON(items => items.filter((item) => item.id !== 'amount'));
         }
         else if (displayJSON.some(item => item.id === 'amount')) {

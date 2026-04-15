@@ -4,7 +4,12 @@ import './App.css'
 
 export default SpellID;
 
-function SpellID({setSpellID}) {
+function SpellID({setDisplayJSON}) {
+
+    const setSpellID = (newID) =>{
+    setDisplayJSON((items) => items.map(item => 
+              item.id === 'id' ? { ...item, value: newID } : item
+    ))}
     
     return (
         <div className="node">

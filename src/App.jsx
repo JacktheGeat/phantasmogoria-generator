@@ -13,24 +13,14 @@ export default App;
 
 function App() {
 
-  const setSpellName = (newName) =>{
-    setDisplayJSON(displayJSON.map(item => 
-              item.id === 'name' ? { ...item, value: newName } : item
-    ))}
-
-  const setSpellID = (newID) =>{
-    setDisplayJSON(displayJSON.map(item => 
-              item.id === 'id' ? { ...item, value: newID } : item
-    ))}
-
-
   const [displayJSON, setDisplayJSON] = useState(
     [
       {id:'id', value: ''},
       {id: 'name', value: ''},
       {id: 'class', value: ''},
       {id: 'attributes', value: []},
-      {id: 'effects', value: []}
+      {id: 'effects', value: []},
+      {id: 'texture', value: ''}
     ]
   )
 
@@ -67,15 +57,15 @@ function App() {
     <>
       <h1>Json generator</h1>
       <div className="container" id="generator">
-        <SpellID setSpellID={setSpellID}/>
+        <SpellID setDisplayJSON={setDisplayJSON}/>
 
-        <SpellName setSpellName={setSpellName}/>
+        <SpellName setDisplayJSON={setDisplayJSON}/>
 
         <SpellClass displayJSON={displayJSON} setJSON={setDisplayJSON}/>
 
         <Attributes/>
         <Effects/>
-        <Texture/>
+        <Texture setDisplayJSON={setDisplayJSON}/>
       </div>
       <Results getDisplayJSON={getDisplayJSON}/>
     </>

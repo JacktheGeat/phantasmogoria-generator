@@ -18,8 +18,7 @@ function SpellClass({displayJSON, setJSON}) {
 
     const [spellClass, setClass] = useState();
 
-    function handleClass(newClass) {
-      console.log(newClass);
+    function handleClass(newClass) { 
       setJSON((items) => items.map(item => 
         item.id === 'class' ? { ...item, value: newClass } : item ));
       setClass(newClass);

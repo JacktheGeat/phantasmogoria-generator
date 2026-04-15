@@ -4,7 +4,12 @@ import './App.css'
 
 export default Texture;
 
-function Texture({setTexture}) {
+function Texture({setDisplayJSON}) {
+    
+    const setTexture = (newName) =>{
+    setDisplayJSON((items) => items.map(item => 
+              item.id === 'texture' ? { ...item, value: newName } : item
+    ))}
     
     return (
         <div className="node">
