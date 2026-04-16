@@ -1,29 +1,29 @@
 import {React, useState } from 'react';
 
 import './App.css'
-import Attribute from './Attribute';
+import Effect from './Effect';
 
-export default AttributeBox;
+export default EffectBox;
 
-function AttributeBox({setJSON}) {
+function EffectBox({setJSON}) {
 
   const [selectedValue, setSelectedValue] = useState('');
-  const availableAttributes = [ 'power_multiplier', 'cost_multiplier', 'overcharge_multiplier'];
+  const EffectsList = ["exhaust", "expunge", "status", "block", "damage", "multi_damage", "heal", "draw", "mana_restore", "apply_modifier", "modify_player", "modify_component", "modify_component_type", "modify_component_tag"];
+  const [effectBox, setEffectBox] = useState([])
   const [attributeList, setAttributeList] = useState([]);
 
   function handleSetAttributes(target, newValue, key) {
     if (target == '') return;
     if ( newValue == undefined) {
-      setJSON('attributes', attributeList.filter((item) => item.key !== key));
+      setJSON('effects', attributeList.filter((item) => item.key !== key));
       setAttributeList(items => items.filter((item) => item.key !== key));
     }
     else if (attributeList.some(item => item.id === target && item.key=== key) ) {
-      setJSON('attributes', attributeList.map(item => item.id === target && item.key === key ? { ...item, value: newValue } : item));
+      setJSON('effects', attributeList.map(item => item.id === target && item.key === key ? { ...item, value: newValue } : item));
       setAttributeList(items => items.map(item => item.id === target && item.key === key  ? { ...item, value: newValue } : item))
     }
     else {
-      console.log(`added ${target}:${newValue}`)
-      setJSON('attributes', [...attributeList, {key: key, id: target, value: newValue}])
+      setJSON('effects', [...attributeList, {key: key, id: target, value: newValue}])
       setAttributeList(items => [...items, {key: key, id: target, value: newValue} ]);
     }
     setSelectedValue('')
@@ -32,10 +32,10 @@ function AttributeBox({setJSON}) {
   return (
     <>
     <div className="node">
-      <a className="nodeName">Attributes: </a>
+      <a className="nodeName">Effects: </a>
       <select name="class" value={selectedValue} onChange={e => {setSelectedValue(e.target.value)}}>
         <option value=''></option>
-        {availableAttributes.filter(item => !attributeList.map(attribute => attribute.id).includes(item)).map(item => (
+        {EffectsList.map(item => (
           <option key={item} value={item}>{item}</option>
         ))}
       </select>
@@ -43,7 +43,7 @@ function AttributeBox({setJSON}) {
     </div>
     <div className='box'>
       {attributeList.map(item => (
-          <Attribute
+          <Effect
           key={item.key} 
           myKey={item.key}
           id={item.id}

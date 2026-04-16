@@ -3,7 +3,7 @@ import {React, useState } from 'react';
 import './App.css'
 
 
-const Effect = ({ id, myKey, setJSON }) => {
+const Attribute = ({ id, myKey, setJSON }) => {
     const myID = id;
     const key= myKey
     const [value, setValue] = useState(0)
@@ -15,7 +15,7 @@ const Effect = ({ id, myKey, setJSON }) => {
 
     return (
         <>
-            <div className='effectBox'>
+            <div className='attributeBox'>
                 <button className='remove' onClick={() => {setJSON(id, undefined, key)}}>-</button>
                 <a>{myID}:</a>
                 <input type="number" value={value} step='0.1' onChange={e => update(e.target.value)}/>
@@ -24,4 +24,4 @@ const Effect = ({ id, myKey, setJSON }) => {
     )
 };
 
-export default Effect
+export default Attribute

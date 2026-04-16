@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 
-import Attributes from './AttributeBox';
-import Effects from './Effect';
+import AttributeBox from './AttributeBox';
+import EffectBox from './EffectBox';
 import SpellClass from './SpellClass';
 import SpellName from './SpellName';
 import Texture from './Texture';
@@ -23,7 +23,7 @@ function App() {
       {id: 'texture', value: ''}
     ]
   )
-  const handleSetJSON = (target, newValue) =>{
+  function handleSetJSON(target, newValue){
     if ( newValue == undefined) {
       setDisplayJSON(items => items.filter((item) => item.id !== target));
     }
@@ -37,6 +37,9 @@ function App() {
   }
 
   const formatJSON = (inputElement, indentLevel = 0) => {
+    if ( inputElement.constructor.name == 'Array') {
+      console.log(inputElement.map(item => item.constructor.name))
+    }
     if (indentLevel == 1) {
       return inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1))
     }
@@ -50,10 +53,14 @@ function App() {
       return inputElement;
     }
     else if (inputElement.constructor.name == "Array") {
-      return "[" + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1)) +"\n" +  "    ".repeat(indentLevel-1)+"]"
+      return (
+        "[" 
+        + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ formatJSON(item, indentLevel +1)) 
+        +"\n" +  "    ".repeat(indentLevel-1)+"]"
+      )
     }
     else if (inputElement.constructor.name == "Object") {
-      return "{" + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1)) +"\n" +  "    ".repeat(indentLevel-1)+"}"
+      return "{\n" + "    ".repeat(indentLevel)+ '"' + inputElement.id + '"' + ": " + formatJSON(inputElement.value, indentLevel +1) +"\n" +  "    ".repeat(indentLevel-1)+"}"
     }
     else return typeof inputElement
     }
@@ -75,8 +82,8 @@ function App() {
 
         <SpellClass displayJSON={displayJSON} setJSON={handleSetJSON}/>
 
-        <Attributes setAttributes={handleSetJSON}/>
-        <Effects/>
+        <AttributeBox setJSON={handleSetJSON}/>
+        <EffectBox setJSON={handleSetJSON}/>
         <Texture setTexture={handleSetJSON}/>
       </div>
       <Results getDisplayJSON={getDisplayJSON}/>
