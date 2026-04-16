@@ -32,7 +32,13 @@ const useHandleJSON = () => {
     else if (typeof value == 'object') {
       console.log(value)
       if (Array.isArray(value)) {
-        return ("\n" + "  ".repeat(indentLevel) + key + ": [\n" + value.map((item) => Object.entries(item).map(([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1))).join("") 
+        return ("\n" + "  ".repeat(indentLevel) 
+        + key + ": [" 
+        + value.map(
+          (item) => Object.entries(item).map(
+            ([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)
+          ).filter(item => item !== '').join(",") 
+        )
         + "\n" + "  ".repeat(indentLevel) +"]")
       }
       else {
@@ -40,7 +46,9 @@ const useHandleJSON = () => {
         return (
           "\n" + "  ".repeat(indentLevel) 
           + key + ": {" + "\n" 
-          + Object.entries(value).map(([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)).join("") 
+          + Object.entries(value).map(
+            ([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)
+          ).filter(item => item !== '').join(",") 
           + "  ".repeat(indentLevel) +"}"
         )
       }
@@ -54,7 +62,7 @@ const useHandleJSON = () => {
 
   const getDisplayJSON = () => {
     const result = (
-      "{" + Object.entries(displayJSON).map(([key, value]) => formatJSON(key,value, 1)).join(",") + "\n}"
+      "{" + Object.entries(displayJSON).map(([key, value]) => formatJSON(key,value, 1)).filter(item => item !== '').join(",") + "\n}"
     )
     console.log(result);
     return result;
