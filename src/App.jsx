@@ -26,8 +26,8 @@ const useHandleJSON = () => {
   )
 
   const formatJSON = (key, value, indentLevel = 0) => {
-    if (value == undefined || key == 'key') {
-      return ""
+    if (value == undefined){
+      return ''
     }
     else if (typeof value == 'object') {
       console.log(value)
@@ -35,25 +35,25 @@ const useHandleJSON = () => {
         return ("\n" + "  ".repeat(indentLevel) 
         + key + ": [" 
         + value.map(
-          (item) => Object.entries(item).map(
-            ([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)
-          ).filter(item => item !== '').join(",") 
-        )
-        + "\n" + "  ".repeat(indentLevel) +"]")
+          (item) => "  ".repeat(indentLevel+1) + formatJSON("", item, indentLevel+1)
+        ) 
+        + "\n"+"  ".repeat(indentLevel) +"]")
       }
       else {
-        console.log("object")
-        return (
-          "\n" + "  ".repeat(indentLevel) 
-          + key + ": {" + "\n" 
-          + Object.entries(value).map(
-            ([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)
-          ).filter(item => item !== '').join(",") 
-          + "  ".repeat(indentLevel) +"}"
-        )
+        if (key == "") {
+          return (
+            "\n" + "  ".repeat(indentLevel) 
+            +"{" 
+            + Object.entries(value).map(
+              ([subKey, subValue]) => subKey !== 'key' ? formatJSON(subKey, subValue, indentLevel+1) : ''
+            ).filter((item) => (item !== '')).join(",") 
+            +"\n"+ "  ".repeat(indentLevel) +"}"
+          )
+        } 
+        
       }
     }
-    else return ("\n" + "  ".repeat(indentLevel) + key + ": " + value)
+    else return ("\n" + "  ".repeat(indentLevel) + (key == '' ? '' :key + ": " ) + value)
   }
 
   function handleSetJSON(target, newValue){

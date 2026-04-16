@@ -13,6 +13,8 @@ function EffectBox({setJSON}) {
   const [attributeList, setAttributeList] = useState([]);
 
   function handleSetAttributes(target, newValue, key) {
+    console.log("target: " + target)
+
     if (target == '') return;
     if ( newValue == undefined) {
       setJSON('effects', attributeList.filter((item) => item.key !== key));
@@ -23,8 +25,8 @@ function EffectBox({setJSON}) {
       setAttributeList(items => items.map(item => item.key === key  ? { ...item, value: newValue } : item))
     }
     else {
-      setJSON('effects', [...attributeList, {key: key, id: target, value: newValue}])
-      setAttributeList(items => [...items, {key: key, id: target, value: newValue} ]);
+      setJSON('effects', [...attributeList, {key: key, effect: target, value: newValue}])
+      setAttributeList(items => [...items, {key: key, effect: target, value: newValue} ]);
     }
     setSelectedValue('')
   }
@@ -33,20 +35,31 @@ function EffectBox({setJSON}) {
     <>
     <div className="node">
       <a className="nodeName">Effects: </a>
-      <select name="class" value={selectedValue} onChange={e => {setSelectedValue(e.target.value)}}>
+      <select name="class" value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
         <option value=''></option>
         {EffectsList.map(item => (
           <option key={item} value={item}>{item}</option>
         ))}
       </select>
-      <button className='add' onClick={() => handleSetAttributes(selectedValue, 0, Date.now())}>+</button>
+      <button className='add' onClick={() => (
+        handleSetAttributes(selectedValue, 
+          {
+            effect: selectedValue,
+            multiplier: 0,
+            source: 'constant',
+            target: 'self',
+            conditions: [],
+            modifiers: []
+          }
+    , Date.now())
+        )}>+</button>
     </div>
     <div className='box'>
       {attributeList.map(item => (
           <Effect
           key={item.key} 
           myKey={item.key}
-          id={item.id}
+          myEffect={item.effect}
           setJSON={handleSetAttributes}
           />
         ))}

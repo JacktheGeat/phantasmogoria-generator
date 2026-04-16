@@ -32,8 +32,8 @@ function useType(setJSON) {
     }
 
     const handleLimit = (newValue) =>{
-        setLimit(newValue)
-        setJSON('use_limit', newValue)
+        setLimit(Number(newValue))
+        setJSON('use_limit', parseInt(Number(newValue)))
     }
 
 
