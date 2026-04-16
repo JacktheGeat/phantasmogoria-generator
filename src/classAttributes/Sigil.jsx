@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 export default spellAttributes;
 
@@ -96,5 +96,7 @@ function spellAttributes(setJSON) {
         }
     }
 
-    return {update, display}
+    const displayMemo = useMemo(() => display(), [currentClass, curve, cost, power, overcharge]);
+
+    return {update, display: displayMemo}
 }

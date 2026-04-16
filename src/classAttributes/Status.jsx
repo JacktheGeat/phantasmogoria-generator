@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 
 export default statusAttributes;
@@ -80,5 +80,7 @@ function statusAttributes(setJSON) {
         }
     }
 
-    return {update, display}
+    const displayMemo = useMemo(() => display(), [currentClass, stackType, isSeparate]);
+
+    return {update, display: displayMemo}
 }

@@ -18,9 +18,9 @@ function EffectBox({setJSON}) {
       setJSON('effects', attributeList.filter((item) => item.key !== key));
       setAttributeList(items => items.filter((item) => item.key !== key));
     }
-    else if (attributeList.some(item => item.id === target && item.key=== key) ) {
-      setJSON('effects', attributeList.map(item => item.id === target && item.key === key ? { ...item, value: newValue } : item));
-      setAttributeList(items => items.map(item => item.id === target && item.key === key  ? { ...item, value: newValue } : item))
+    else if (attributeList.some(item => item.key=== key) ) {
+      setJSON('effects', attributeList.map(item => item.key === key ? { ...item, value: newValue } : item));
+      setAttributeList(items => items.map(item => item.key === key  ? { ...item, value: newValue } : item))
     }
     else {
       setJSON('effects', [...attributeList, {key: key, id: target, value: newValue}])

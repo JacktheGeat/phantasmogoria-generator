@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 
 export default sizeHandler;
@@ -40,5 +40,7 @@ function sizeHandler(setJSON) {
         }
     }
 
-    return {update, display}
+    const displayMemo = useMemo(() => display(), [currentClass, size]);
+
+    return {update, display: displayMemo}
 }

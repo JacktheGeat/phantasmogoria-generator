@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 
 export default baseAttributes;
@@ -39,6 +39,8 @@ function baseAttributes(setJSON) {
             );
         }
     }
+    const displayMemo = useMemo(() => display(), [currentClass, growthRate]);
 
-    return {update, display}
+
+    return {update, display: displayMemo}
 }

@@ -1,16 +1,16 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 
-export default rarityHandler;
+export default useRarityHandler;
 
-function rarityHandler(setJSON) {
+function useRarityHandler(setJSON) {
     const [rarity, setRarity] = useState('common')
     const [currentClass, setClass] = useState('');
 
     function update(newClass) {
         setClass(newClass)
-        if (newClass !== 'status') {init()}
+        if (newClass !== 'status' && newClass != '') {init()}
         else {reset()};
     }
 
@@ -47,5 +47,7 @@ function rarityHandler(setJSON) {
         }
     }
 
-    return {update, display}
+    const displayMemo = useMemo(() => display(), [currentClass, rarity]);
+
+    return {update, display: displayMemo}
 }

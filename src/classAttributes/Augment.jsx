@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
 
 export default augmentAttributes;
@@ -58,6 +58,7 @@ function augmentAttributes(setJSON) {
             );
         }
     }
+    const displayMemo = useMemo(() => display(), [currentClass,amount, consumability,]);
 
-    return {update, display}
+    return {update, display: displayMemo}
 }

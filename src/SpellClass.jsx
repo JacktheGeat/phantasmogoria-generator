@@ -11,7 +11,11 @@ import rarityHandler from './classAttributes/Rarity';
 
 export default SpellClass;
 
-function SpellClass({displayJSON, setJSON}) {
+function updateClass({setJSON}, newClass) {
+    
+}
+
+function SpellClass({setJSON}) {
     const [spellClass, setClass] = useState();
 
     const base = baseAttributes(setJSON);
@@ -35,8 +39,6 @@ function SpellClass({displayJSON, setJSON}) {
       status.update(newClass);
     }
 
-    
-
     return (
         <>
             <div className="node">
@@ -51,13 +53,13 @@ function SpellClass({displayJSON, setJSON}) {
                 </select>
             </div>
             <div className='container' style={{paddingLeft: '20px'}}>
-              {base.display()}
-              {sigil.display()}
-              {augment.display()}
-              {exhaustType.display()}
-              {status.display()}
-              {size.display()}
-              {rarity.display()}
+              {base.display}
+              {sigil.display}
+              {augment.display}
+              {exhaustType.display}
+              {status.display}
+              {size.display}
+              {rarity.display}
             </div>
 
         </>

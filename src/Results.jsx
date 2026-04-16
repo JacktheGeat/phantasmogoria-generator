@@ -3,15 +3,20 @@ import './App.css'
 
 export default Results;
 
-function Results({getDisplayJSON}) {
+function Results({displayJSON}) {
     const textareaRef = useRef(null);
 
     useEffect(() => {
-    if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
-        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-    });
+        if (textareaRef.current) {
+            if (textareaRef.current) {
+                const el = textareaRef.current;
+                const scrollY = window.scrollY;
+                el.style.height = 'auto';
+                el.style.height = `${el.scrollHeight}px`;
+                window.scrollTo({ top: scrollY });
+            }
+        }
+    }, [displayJSON]);
     
     return (
         <div className='resultsBox'>
@@ -20,8 +25,8 @@ function Results({getDisplayJSON}) {
             autoCorrect="{off}" autoCapitalize="{none}" spellCheck="{false}" readOnly="{true}" 
             ref={textareaRef}
             style={{overflow: 'shown', resize: 'none'}}
-            value={getDisplayJSON()}>
+            value={displayJSON}>
             </textarea>
-      </div>
+        </div>
     )
 }

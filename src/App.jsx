@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback} from 'react';
 import './App.css';
 
 import AttributeBox from './AttributeBox';
@@ -11,82 +11,75 @@ import Results from './Results';
 
 export default App;
 
-function App() {
-
+const useHandleJSON = () => {
   const [displayJSON, setDisplayJSON] = useState(
-    [
-      {id:'id', value: ''},
-      {id: 'name', value: ''},
-      {id: 'class', value: ''},
-      {id: 'attributes', value: []},
-      {id: 'effects', value: []},
-      {id: 'texture', value: ''}
-    ]
+    {
+      id: '',
+      name: '',
+      class: '',
+      attributes: [
+      ],
+        effects: [
+      ],
+        texture: '',
+    }
   )
-  function handleSetJSON(target, newValue){
-    if ( newValue == undefined) {
-      setDisplayJSON(items => items.filter((item) => item.id !== target));
+
+  const formatJSON = (key, value, indentLevel = 0) => {
+    if (value == undefined || key == 'key') {
+      return ""
     }
-    else if (displayJSON.some(item => item.id === target)) {
-      setDisplayJSON(items => items.map(item => 
-      item.id === target ? { ...item, value: newValue } : item))
+    else if (typeof value == 'object') {
+      console.log(value)
+      if (Array.isArray(value)) {
+        return ("\n" + "  ".repeat(indentLevel) + key + ": [\n" + value.map((item) => Object.entries(item).map(([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1))).join("") 
+        + "\n" + "  ".repeat(indentLevel) +"]")
+      }
+      else {
+        console.log("object")
+        return (
+          "\n" + "  ".repeat(indentLevel) 
+          + key + ": {" + "\n" 
+          + Object.entries(value).map(([subKey, subValue]) => formatJSON(subKey, subValue, indentLevel+1)).join("") 
+          + "  ".repeat(indentLevel) +"}"
+        )
+      }
     }
-    else {
-      setDisplayJSON(items => [...new Set([...items, {id: target, value: newValue} ])])
-    }
+    else return ("\n" + "  ".repeat(indentLevel) + key + ": " + value)
   }
 
-  const formatJSON = (inputElement, indentLevel = 0) => {
-    if ( inputElement.constructor.name == 'Array') {
-      console.log(inputElement.map(item => item.constructor.name))
-    }
-    if (indentLevel == 1) {
-      return inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ '"' + item.id + '"' + ": " + formatJSON(item.value, indentLevel +1))
-    }
-    if (typeof inputElement == 'boolean') {
-      return  inputElement;
-    }
-    else if (typeof inputElement == 'string') {
-      return '"' + inputElement +'"';
-    }
-    else if (typeof inputElement == 'number') {
-      return inputElement;
-    }
-    else if (inputElement.constructor.name == "Array") {
-      return (
-        "[" 
-        + inputElement.map(item => "\n" + "    ".repeat(indentLevel)+ formatJSON(item, indentLevel +1)) 
-        +"\n" +  "    ".repeat(indentLevel-1)+"]"
-      )
-    }
-    else if (inputElement.constructor.name == "Object") {
-      return "{\n" + "    ".repeat(indentLevel)+ '"' + inputElement.id + '"' + ": " + formatJSON(inputElement.value, indentLevel +1) +"\n" +  "    ".repeat(indentLevel-1)+"}"
-    }
-    else return typeof inputElement
-    }
+  function handleSetJSON(target, newValue){
+    setDisplayJSON( (prev) => ({...prev, [target]: newValue }));
+  }
 
   const getDisplayJSON = () => {
-    return (
-      "{" + formatJSON(displayJSON.filter(item => item.id), 1) + "\n}"
+    const result = (
+      "{" + Object.entries(displayJSON).map(([key, value]) => formatJSON(key,value, 1)).join(",") + "\n}"
     )
+    console.log(result);
+    return result;
   }
+  return {formatJSON, handleSetJSON, getDisplayJSON}
+}
 
+function App() {
+  const jsonObject = useHandleJSON();
 
   return (
     <>
       <h1>Json generator</h1>
       <div className="container" id="generator">
-        <SpellID setSpellID={handleSetJSON}/>
+        <SpellID setSpellID={jsonObject.handleSetJSON}/>
 
-        <SpellName setSpellName={handleSetJSON}/>
+        <SpellName setSpellName={jsonObject.handleSetJSON}/>
 
-        <SpellClass displayJSON={displayJSON} setJSON={handleSetJSON}/>
+        <SpellClass setJSON={jsonObject.handleSetJSON}/>
 
-        <AttributeBox setJSON={handleSetJSON}/>
-        <EffectBox setJSON={handleSetJSON}/>
-        <Texture setTexture={handleSetJSON}/>
+        <AttributeBox setJSON={jsonObject.handleSetJSON}/>
+        <EffectBox setJSON={jsonObject.handleSetJSON}/>
+        <Texture setTexture={jsonObject.handleSetJSON}/>
       </div>
-      <Results getDisplayJSON={getDisplayJSON}/>
+      <Results displayJSON={jsonObject.getDisplayJSON()}/>
     </>
   )
 }
