@@ -22,7 +22,6 @@ function AttributeBox({setJSON}) {
       setAttributeList(items => items.map(item => item.id === target && item.key === key  ? { ...item, value: newValue } : item))
     }
     else {
-      console.log(`added ${target}:${newValue}`)
       setJSON('attributes', [...attributeList, {key: key, id: target, value: newValue}])
       setAttributeList(items => [...items, {key: key, id: target, value: newValue} ]);
     }

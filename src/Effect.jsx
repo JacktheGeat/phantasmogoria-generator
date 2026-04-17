@@ -4,37 +4,41 @@ import './App.css'
 
 
 const Effect = ({ myEffect, myKey, setJSON }) => {
-    const [value, setValue] = useState({})
-    const [multiplier, setMultiplier] = useState(0)
-    const [source, setSource] = useState('constant')
-    const [target, setTarget] = useState('self')
+
+    const [value, setValue] = useState({
+            effect: myEffect,
+            multiplier: 0,
+            source: 'constant',
+            target: 'self',
+            conditions: [],
+            modifiers: []
+        })
 
     const effect = myEffect
     const key = myKey
 
-    const sample = {
+    const effObj = () => {
+        return {
         effect: myEffect,
         multiplier: multiplier,
         source: source,
         target: target,
         conditions: [],
         modifiers: []
+        }
     }
 
     function update(target, newValue) {
-        if (target == 'multiplier') {
-            setValue( (prev) => ({...prev, [target]: newValue }));
-            setValue(parseFloat(Number(newValue)))
-            setJSON(effect, parseFloat(Number(newValue)), key)
-        }
+        setValue( (prev) => ({...prev, [target]:newValue }));
+        setJSON(key, {...value, [target]:newValue })
     }
 
     return (
         <>
             <div className='effectBox'>
-                <button className='remove' onClick={() => {setJSON(effect, undefined, key)}}>-</button>
+                <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
                 <a>{effect}:</a>
-                <input type="number" value={multiplier} step='0.1' onChange={(e) => {update('multiplier', e.target.value)}}/>
+                <input type="number" value={value.multiplier} step='0.1' onChange={(e) => {update('multiplier', e.target.value)}}/>
             </div>
         </>
     )

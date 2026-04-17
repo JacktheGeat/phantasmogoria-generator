@@ -30,7 +30,6 @@ const useHandleJSON = () => {
       return ''
     }
     else if (typeof value == 'object') {
-      console.log(value)
       if (Array.isArray(value)) {
         return ("\n" + "  ".repeat(indentLevel) 
         + key + ": [" 
@@ -64,7 +63,7 @@ const useHandleJSON = () => {
     const result = (
       "{" + Object.entries(displayJSON).map(([key, value]) => formatJSON(key,value, 1)).filter(item => item !== '').join(",") + "\n}"
     )
-    console.log(result);
+    // console.log(result);
     return result;
   }
   return {formatJSON, handleSetJSON, getDisplayJSON}
