@@ -17,8 +17,7 @@ const useHandleJSON = () => {
       id: '',
       name: '',
       class: '',
-      attributes: [
-      ],
+      attributes: {},
         effects: [
       ],
         texture: '',
@@ -48,7 +47,17 @@ const useHandleJSON = () => {
             ).filter((item) => (item !== '')).join(",") 
             +"\n"+ "  ".repeat(indentLevel) +"}"
           )
-        } 
+        }
+        else {
+          return (
+            "\n" + "  ".repeat(indentLevel) 
+            +key + ": {" 
+            + Object.entries(value).map(
+              ([subKey, subValue]) => subKey !== 'key' ? formatJSON(subKey, subValue, indentLevel+1) : ''
+            ).filter((item) => (item !== '')).join(",") 
+            +"\n"+ "  ".repeat(indentLevel) +"}"
+          )
+        }
         
       }
     }

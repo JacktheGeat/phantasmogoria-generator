@@ -18,8 +18,8 @@ function EffectBox({setJSON}) {
           item.key === key ? {key:key, ...newValue}: item
         ))
     if ( newValue == undefined) {
-      setJSON('effects', effectList.map((item) => item.key !== key));
-      setEffectList(items => items.map((item) => item.key !== key));
+      setJSON('effects', effectList.filter((item) => (item.key !== key)))
+      setEffectList(items => items.filter((item) => (item.key !== key) ));
     }
     
     else if (effectList.find((item) => item.key === key)) {
