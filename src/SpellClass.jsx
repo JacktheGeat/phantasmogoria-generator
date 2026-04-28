@@ -9,23 +9,24 @@ import useType from './classAttributes/UseType';
 import sizeHandler from './classAttributes/Size';
 import rarityHandler from './classAttributes/Rarity';
 
+import AttributeBox from './AttributeBox';
+import EffectBox from './EffectBox';
+
 export default SpellClass;
 
-function updateClass({setJSON}, newClass) {
-    
-}
-
 function SpellClass({setJSON}) {
-    const [spellClass, setClass] = useState();
+    const [spellClass, setClass] = useState('');
+    const [attributesList, setAttributesList] = useState({})
 
-    const base = baseAttributes(setJSON);
-    const sigil = sigilAttributes(setJSON);
-    const augment = augmentAttributes(setJSON);
-    const status = statusAttributes(setJSON)
-    const exhaustType = useType(setJSON);
-    const size = sizeHandler(setJSON)
-    const rarity = rarityHandler(setJSON);
+    const base = baseAttributes(handleSetAttributes);
+    const sigil = sigilAttributes(handleSetAttributes);
+    const augment = augmentAttributes(handleSetAttributes);
+    const status = statusAttributes(handleSetAttributes)
+    const exhaustType = useType(handleSetAttributes);
+    const size = sizeHandler(handleSetAttributes)
+    const rarity = rarityHandler(handleSetAttributes);
 
+    const attributesHandler = AttributeBox(handleSetAttributes)
 
     function handleClass(newClass) { 
       setJSON('class', newClass);
@@ -37,6 +38,27 @@ function SpellClass({setJSON}) {
       sigil.update(newClass);
       augment.update(newClass);
       status.update(newClass);
+    }
+
+    function handleSetAttributes(target, newValue) {
+        if (!target) return;
+
+        setAttributesList(prev => {
+            let updated = { ...prev };
+
+            if (target === 'attributes') {
+                Object.entries(newValue).forEach(([k, v]) => {
+                    updated[k] = (v === 'undefined') ? undefined : v;
+                });
+            } else {
+                updated[target] = newValue;
+            }
+
+            // use the SAME updated object here
+            setJSON('attributes', updated);
+
+            return updated;
+        });
     }
 
     return (
@@ -61,7 +83,8 @@ function SpellClass({setJSON}) {
               {size.display}
               {rarity.display}
             </div>
-
+            <EffectBox setJSON={setJSON}/>
+            {attributesHandler.display}
         </>
     )
 }

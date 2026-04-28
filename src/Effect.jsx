@@ -11,22 +11,12 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
             source: 'constant',
             target: 'self',
             conditions: [],
-            modifiers: []
+            modifiers: [],
+            effect_var: undefined
         })
 
     const effect = myEffect
     const key = myKey
-
-    const effObj = () => {
-        return {
-        effect: myEffect,
-        multiplier: multiplier,
-        source: source,
-        target: target,
-        conditions: [],
-        modifiers: []
-        }
-    }
 
     function update(target, newValue) {
         setValue( (prev) => ({...prev, [target]:newValue }));
@@ -37,8 +27,16 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
         <>
             <div className='effectBox'>
                 <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
-                <a>{effect}:</a>
+                <h3>{effect}</h3>
+                <p>Multiplier: </p>
                 <input type="number" value={value.multiplier} step='0.1' onChange={(e) => {update('multiplier', e.target.value)}}/>
+                <p></p>
+                <select  name="class" id="class" value={value.target} onChange={e => {update('target', e.target.value)}}>
+                    <option value='self'>Self</option>
+                    <option value="ritual">Ritual</option>
+                    <option value="player">Player</option>
+                    <option value="enemy">Enemy</option>
+                </select>
             </div>
         </>
     )

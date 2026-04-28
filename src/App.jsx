@@ -31,7 +31,7 @@ const useHandleJSON = () => {
     else if (typeof value == 'object') {
       if (Array.isArray(value)) {
         return ("\n" + "  ".repeat(indentLevel) 
-        + key + ": [" 
+        +  '"' +key +'"' + ": [" 
         + value.map(
           (item) => "  ".repeat(indentLevel+1) + formatJSON("", item, indentLevel+1)
         ) 
@@ -51,7 +51,7 @@ const useHandleJSON = () => {
         else {
           return (
             "\n" + "  ".repeat(indentLevel) 
-            +key + ": {" 
+            + '"' +key +'"' + ": {" 
             + Object.entries(value).map(
               ([subKey, subValue]) => subKey !== 'key' ? formatJSON(subKey, subValue, indentLevel+1) : ''
             ).filter((item) => (item !== '')).join(",") 
@@ -61,10 +61,14 @@ const useHandleJSON = () => {
         
       }
     }
-    else return ("\n" + "  ".repeat(indentLevel) + (key == '' ? '' :key + ": " ) + value)
+    else if (typeof value == 'string') {
+      return ("\n" + "  ".repeat(indentLevel) + (key == '' ? '' : '"' +key +'"'+ ": " ) + '"'+ value+'"')
+    }
+    else return ("\n" + "  ".repeat(indentLevel) + (key == '' ? '' : '"' +key +'"' + ": " ) + value)
   }
 
   function handleSetJSON(target, newValue){
+    console.log("setJSON: ", target,newValue)
     setDisplayJSON( (prev) => ({...prev, [target]: newValue }));
   }
 
@@ -90,9 +94,7 @@ function App() {
         <SpellName setSpellName={jsonObject.handleSetJSON}/>
 
         <SpellClass setJSON={jsonObject.handleSetJSON}/>
-
-        <AttributeBox setJSON={jsonObject.handleSetJSON}/>
-        <EffectBox setJSON={jsonObject.handleSetJSON}/>
+        
         <Texture setTexture={jsonObject.handleSetJSON}/>
       </div>
       <Results displayJSON={jsonObject.getDisplayJSON()}/>
