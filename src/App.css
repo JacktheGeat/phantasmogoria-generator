@@ -41,13 +41,10 @@ body {
   border: #2e4928 solid 2px;
 }
 
-.node-header h3{
+.node-header > * {
   color:#b4b4b4;
   padding-left: 5px;
   padding-right: 5px;
-  background-color: #20331b;
-  
-  
 }
 
 .node {
@@ -62,8 +59,9 @@ body {
 }
 
 .node > * {
-  padding: 2px;
   padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .node > .node {
   margin-left: 10px;
@@ -74,7 +72,9 @@ input, select {
   color:#b4b4b4;
   height: 22px;
   border: #b4b4b4 solid 2px;
-  border-radius: 2%/5%;
+  border-radius: 25px;
+  padding: 2px;
+  padding-left: 10px;
 }
 
 .node-box { 
@@ -82,8 +82,7 @@ input, select {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: #575757 2px solid;
-  border-left: 3px solid white;
+  border-left: 3px solid #b4b4b4;
 }
 .node-box:empty {
   border: none;
@@ -114,6 +113,7 @@ h1 {
 }
 
 button {
+  border-radius: 25px;
   user-select: none;
   border-style: solid;
   text-align: center;
@@ -138,6 +138,7 @@ button.remove {
   border-color: var(--node-remove-border);
   width: 26px;
   height: 26px;
+  color: black;
 }
 
 button.remove:enabled:hover, button.remove:focus{
@@ -145,7 +146,7 @@ button.remove:enabled:hover, button.remove:focus{
 }
 
 div {
-  border-radius: 2%/5%;
+  border-radius: 25px;
 }
 
 textarea {

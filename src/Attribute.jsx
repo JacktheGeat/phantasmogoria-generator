@@ -21,12 +21,10 @@ const Attribute = ({ id, setJSON }) => {
     return (
         <>
             <div className='attributeBox'>
-                <div className='flex_column'>
-                    <div className='node-header'>
+                <div className='node'>
                         <button className='remove' onClick={() => {setJSON(myID, undefined)}}>-</button>
                         <h3>{formatElement(myID)}:</h3>
                         <input type="number" value={value} step='0.1' onChange={e => update(e.target.value)}/>
-                    </div>
                 </div>
             </div>
         </>
