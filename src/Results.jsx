@@ -4,12 +4,12 @@ import './App.css'
 export default Results;
 
 function Results({displayJSON}) {
-    const textareaRef = useRef(null);
+    const textAreaRef = useRef(null);
 
     useEffect(() => {
-        if (textareaRef.current) {
-            if (textareaRef.current) {
-                const el = textareaRef.current;
+        if (textAreaRef.current) {
+            if (textAreaRef.current) {
+                const el = textAreaRef.current;
                 const scrollY = window.scrollY;
                 el.style.height = 'auto';
                 el.style.height = `${el.scrollHeight}px`;
@@ -17,16 +17,26 @@ function Results({displayJSON}) {
             }
         }
     }, [displayJSON]);
+
+    function copyToClipboard(e) {
+        textAreaRef.current.select();
+        document.execCommand('copy');
+        e.target.focus();
+    };
     
     return (
-        <div className='resultsBox'>
-            <textarea 
-            className='resultsText' 
-            autoCorrect="{off}" autoCapitalize="{none}" spellCheck="{false}" readOnly="{true}" 
-            ref={textareaRef}
-            style={{overflow: 'shown', resize: 'none'}}
-            value={displayJSON}>
-            </textarea>
-        </div>
+        <>
+
+            <div className='resultsBox'>
+                <button onClick={copyToClipboard}>Copy</button> 
+                <textarea 
+                className='resultsText' 
+                autoCorrect="{off}" autoCapitalize="{none}" spellCheck="{false}" readOnly="{true}" 
+                ref={textAreaRef}
+                style={{overflow: 'shown', resize: 'none'}}
+                value={displayJSON}>
+                </textarea>
+            </div>
+        </>
     )
 }

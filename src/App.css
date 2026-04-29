@@ -39,6 +39,8 @@ body {
   height: 22px; 
   width: fit-content;
   border: #2e4928 solid 2px;
+  border-radius: 25px;
+  padding: 2px;
 }
 
 .node-header > * {
@@ -67,14 +69,31 @@ body {
   margin-left: 10px;
 }
 
+select.add {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+
 input, select {
   background-color: #424242;
   color:#b4b4b4;
-  height: 22px;
   border: #b4b4b4 solid 2px;
   border-radius: 25px;
   padding: 2px;
   padding-left: 10px;
+}
+
+/* WebKit and Blink */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .node-box { 
@@ -83,6 +102,8 @@ input, select {
   flex-direction: column;
   justify-content: space-between;
   border-left: 3px solid #b4b4b4;
+  border-radius: 25px;
+  padding: 2px;
 }
 .node-box:empty {
   border: none;
@@ -95,15 +116,21 @@ input, select {
   margin: 5px;
   align-items: center;
   display: grid;
+  border-radius: 20px;
+  padding: 2px;
 }
 
 .resultsBox {
   display: flex;
+  align-content: left;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.resultsBox > button {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.resultsText {
-  flex-grow: 1;
-}
 
 a {
   text-align: left;
@@ -113,20 +140,23 @@ h1 {
 }
 
 button {
-  border-radius: 25px;
+  border-radius: 12px;
   user-select: none;
   border-style: solid;
   text-align: center;
   align-content: center;
   outline: 0;
+  width: fit-content;
 }
 
 button.add {
   background-color: var(--node-add);
   border-color: var(--node-add-border);
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   padding: 0;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 button.add:enabled:hover, button.add:focus {
@@ -136,8 +166,8 @@ button.add:enabled:hover, button.add:focus {
 button.remove {
   background-color: var(--node-remove);
   border-color: var(--node-remove-border);
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   color: black;
 }
 
@@ -145,16 +175,16 @@ button.remove:enabled:hover, button.remove:focus{
   background-color: var(--node-remove-hover);
 }
 
-div {
-  border-radius: 25px;
-}
-
 textarea {
   background-color: #404940;
   color:#b4b4b4;
   height: 22px;
   border: #7fa57f solid 2px;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  padding: 2px;
 }
+
 textarea:focus, input:focus, select:focus {
   border-color: white;
   outline: 0;

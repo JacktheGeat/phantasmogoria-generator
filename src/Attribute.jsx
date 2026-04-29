@@ -8,8 +8,12 @@ const Attribute = ({ id, setJSON }) => {
     const [value, setValue] = useState(0)
 
     function update(newValue) {
-        setValue(parseFloat(Number(newValue)))
-        setJSON(myID, parseFloat(Number(newValue)))
+        if (newValue === '' || /^-?\d*\.?\d*$/.test(newValue)) {
+            console.log(newValue)
+            setValue(newValue);
+            setJSON(myID, parseFloat(Number(newValue)));
+        } 
+        
     }
 
     function formatElement(word) {
@@ -24,7 +28,7 @@ const Attribute = ({ id, setJSON }) => {
                 <div className='node'>
                         <button className='remove' onClick={() => {setJSON(myID, undefined)}}>-</button>
                         <h3>{formatElement(myID)}:</h3>
-                        <input type="number" value={value} step='0.1' onChange={e => update(e.target.value)}/>
+                        <input value={value} onChange={e => update(e.target.value)}/>
                 </div>
             </div>
         </>

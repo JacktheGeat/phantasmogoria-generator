@@ -5,6 +5,7 @@ import { formatText } from './helper';
 
 
 const Effect = ({ myEffect, myKey, setJSON }) => {
+    const floatEffects = []
 
     const [value, setValue] = useState({
             effect: myEffect,
@@ -20,8 +21,16 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
     const key = myKey
 
     function update(target, newValue) {
-        setValue( (prev) => ({...prev, [target]:newValue }));
-        setJSON(key, {...value, [target]:newValue })
+        if (target == 'multiplier') {
+            if (newValue === '' || /^-?\d*$/.test(newValue)) {
+                setValue( (prev) => ({...prev, [target]: (newValue) }));
+                setJSON(key, {...value, [target]:Number(newValue) })
+            } 
+        }
+        else {
+            setValue( (prev) => ({...prev, [target]:newValue }));
+            setJSON(key, {...value, [target]:newValue })
+        }
     }
 
     return (
@@ -34,7 +43,7 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
                 </div>
                 <div className='node'>
                     <p className='label'>Multiplier: </p>
-                    <input type="number" value={value.multiplier} step='0.1' onChange={(e) => {update('multiplier', e.target.value)}}/>
+                    <input value={value.multiplier} onChange={(e) => {update('multiplier', e.target.value)}}/>
                 </div>
                 <div className='node'>
                     <p>Target:</p>
