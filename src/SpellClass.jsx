@@ -1,6 +1,8 @@
 import {React, useState } from 'react';
 
 import './App.css'
+import { alert as Alert } from './helper';
+
 import baseAttributes from './classAttributes/Base';
 import sigilAttributes from './classAttributes/Sigil';
 import augmentAttributes from './classAttributes/Augment';
@@ -73,6 +75,7 @@ function SpellClass({setJSON}) {
                     <option value="status">Status</option>
                     <option value="artifact">Artifact</option>
                 </select>
+                { (spellClass == '') && <Alert/>}
             </div>
             <div className='container' style={{paddingLeft: '20px'}}>
               {base.display}

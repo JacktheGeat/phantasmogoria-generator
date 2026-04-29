@@ -1,15 +1,24 @@
 import {React, useState } from 'react';
 
 import './App.css'
+import { alert as Alert } from './helper';
 
 export default SpellID;
 
-function SpellID({setSpellID}) {
+function SpellID({setJSON}) {
+
+    const [id, setID] = useState('');
+
+    function handleSetID(newID) {
+        setID(newID);
+        setJSON('id', newID);
+    }
     
     return (
         <div className="node">
             <a className="nodeName">ID: </a>
-            <input  name="ID" id="ID" onChange={e => setSpellID('id', e.target.value)}/>
+            <input  name="ID" id="ID" value={id} onChange={e => handleSetID(e.target.value)}/>
+            {(id == '') && <Alert/>}
         </div>
     )
 }

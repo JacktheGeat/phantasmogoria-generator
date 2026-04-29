@@ -1,6 +1,7 @@
 import {React, useState } from 'react';
 
 import './App.css'
+import { formatText } from './helper';
 
 
 const Effect = ({ myEffect, myKey, setJSON }) => {
@@ -23,19 +24,13 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
         setJSON(key, {...value, [target]:newValue })
     }
 
-    function formatElement(word) {
-        const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1)
-        const toReturn = capitalizedWord.replace('_', " ")
-        return toReturn
-    }
-
     return (
         <>
             <div className='effectBox'>
             <div className='flex_column'>
                 <div className='node-header'>
                     <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
-                    <h3>{formatElement(effect)}</h3>
+                    <h3>{formatText(effect)}</h3>
                 </div>
                 <div className='node'>
                     <p className='label'>Multiplier: </p>
