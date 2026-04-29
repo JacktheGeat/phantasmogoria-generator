@@ -36,14 +36,14 @@ function statusAttributes(setJSON) {
             return (
                 <>
                     <label htmlFor="stackSeparate">Stack Separately: </label>
-                    <input type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>;
+                    <input type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>
                 </>
                 )
         }
         return (
             <>
                     <label htmlFor="stackSeparate">Stack Separately: </label>
-                    <input disabled type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>;
+                    <input disabled type="checkbox" id="stackSeparate" name="stackSeparate" checked={isSeparate} onChange={e => handleSetSeparate(e.target.checked)}/>
                 </>
         )
     }
