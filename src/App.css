@@ -7,6 +7,10 @@
   --node-remove-border: #be4b2e;
 }
 
+body {
+  background: #2e2e2e;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -14,37 +18,83 @@
   text-align: center;
 }
 
-.container {
+.flex_column {
   display: flex;
   flex-direction: column;
-}
-.node {
-  flex: 1 1 33%;
-  display: flex;
-  align-content: left;
-  justify-content: flex-start;
-  margin: 10px
-}
-.node .node {
-  padding-left: 10px;
+  justify-content:flex-start;
 }
 
-.box { 
-  background-color: #b0e77c;
+.flex_row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+}
+
+.node-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 22px; 
+  width: fit-content;
+  border: #2e4928 solid 2px;
+}
+
+.node-header h3{
+  color:#b4b4b4;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #20331b;
+  
+  
+}
+
+.node {
+  color:#b4b4b4;
+  display: flex;
+  align-content: left;
+  justify-content: space-between;
+  width: fit-content;
+  margin: 10px;
+  align-items: center;
+  height: 22px;
+}
+
+.node > * {
+  padding: 2px;
+  padding-right: 10px;
+}
+.node > .node {
+  margin-left: 10px;
+}
+
+input, select {
+  background-color: #424242;
+  color:#b4b4b4;
+  height: 22px;
+  border: #b4b4b4 solid 2px;
+  border-radius: 2%/5%;
+}
+
+.node-box { 
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: #575757 2px solid;
+  border-left: 3px solid white;
+}
+.node-box:empty {
+  border: none;
 }
 
 .attributeBox, .effectBox {
-  background-color: #9bd464;
-  border: 1px dotted black;
+  background-color: #21331d;
+  border: 4px solid #2e4922;
   padding: 5px;
   margin: 5px;
   align-items: center;
   display: grid;
-  grid-template-columns: 50px minmax(50px, 170px) 0.5fr;
 }
 
 .resultsBox {
@@ -58,25 +108,49 @@
 a {
   text-align: left;
 }
+h1 {
+  color:#b4b4b4
+}
+
+button {
+  border-style: solid;
+  text-align: center;
+  outline: 0;
+}
 
 button.add {
   background-color: var(--node-add);
   border-color: var(--node-add-border);
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
 }
 
-button.add:enabled:hover {
+button.add:enabled:hover, button.add:focus {
   background-color: var(--node-add-hover);
 }
 
 button.remove {
   background-color: var(--node-remove);
   border-color: var(--node-remove-border);
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
 }
 
-button.remove:enabled:hover {
+button.remove:enabled:hover, button.remove:focus{
   background-color: var(--node-remove-hover);
+}
+
+div {
+  border-radius: 2%/5%;
+}
+
+textarea {
+  background-color: #404940;
+  color:#b4b4b4;
+  height: 22px;
+  border: #7fa57f solid 2px;
+}
+textarea:focus, input:focus, select:focus {
+  border-color: white;
+  outline: 0;
 }

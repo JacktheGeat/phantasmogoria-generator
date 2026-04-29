@@ -88,7 +88,7 @@ function App() {
   return (
     <>
       <h1>Json generator</h1>
-      <div className="container" id="generator">
+      <div className="flex_column" id="generator">
         <SpellID setSpellID={jsonObject.handleSetJSON}/>
 
         <SpellName setSpellName={jsonObject.handleSetJSON}/>

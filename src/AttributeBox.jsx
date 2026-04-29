@@ -24,6 +24,12 @@ function AttributeBox(setJSON) {
     }
     setSelectedValue('')
   }
+
+  function formatElement(word) {
+        const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1)
+        const toReturn = capitalizedWord.replace('_', " ")
+        return toReturn
+  }
   
   function display() {
     return (
@@ -33,12 +39,12 @@ function AttributeBox(setJSON) {
           <select name="class" value={selectedValue} onChange={e => {setSelectedValue(e.target.value)}}>
             <option></option>
             {availableAttributes.filter(item => !(item in attributeList)).map((item) => (
-              <option key={item} value={item}>{item}</option>
+              <option key={item} value={item}>{formatElement(item)}</option>
             ))}
           </select>
           <button className='add' onClick={() => handleSetAttributes(selectedValue, 0.0)}>+</button>
         </div>
-        <div className='box'>
+        <div className='node-box'>
           {Object.entries(attributeList).map(([key,value]) => 
               <Attribute
               key={key} 

@@ -42,6 +42,12 @@ function EffectBox({setJSON}) {
     }
     setSelectedValue('')
   }
+
+  function formatElement(word) {
+        const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1)
+        const toReturn = capitalizedWord.replace('_', " ")
+        return toReturn
+  }
   
   return (
     <>
@@ -50,24 +56,26 @@ function EffectBox({setJSON}) {
       <select name="class" value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
         <option value=''></option>
         {EffectsList.map(item => (
-          <option key={item} value={item}>{item}</option>
+          <option key={item} value={item}>{formatElement(item)}</option>
         ))}
       </select>
-      <button className='add' onClick={() => (
-        handleSetEffects(
-          Date.now(), 
-          {
-            effect: selectedValue,
-            multiplier: 0,
-            source: 'constant',
-            target: 'self',
-            conditions: [],
-            modifiers: []
-          }
-        )
-        )}>+</button>
+      <button className='add' onClick={() => {
+        if (selectedValue !== '') {
+          handleSetEffects(
+            Date.now(), 
+            {
+              effect: selectedValue,
+              multiplier: 0,
+              source: 'constant',
+              target: 'self',
+              conditions: [],
+              modifiers: []
+            }
+          )
+        }
+      }}>+</button>
     </div>
-    <div className='box'>
+    <div className='node-box'>
       {
         effectList.map(item => (
             <Effect
