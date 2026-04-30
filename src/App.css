@@ -5,7 +5,8 @@
   --node-remove: #e76f51;
   --node-remove-hover: #f77c5d;
   --node-remove-border: #be4b2e;
-  --error-color: #b82323
+  --error-color: #b82323;
+  --node-height: 26px;
 }
 
 body {
@@ -63,18 +64,17 @@ body {
 .node > * {
   padding-right: 10px;
   padding-left: 5px;
-  padding-right: 5px;
 }
 .node > .node {
   margin-left: 10px;
 }
 
-.node a {
+.node .nodeName {
   border-radius: 10px;
   background-color: #424242;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  padding: 1px;
+  height: var(--node-height);
   padding-left: 5px;
   border: #b4b4b4 solid 2px;
   border-right: none;
@@ -96,7 +96,7 @@ input, select {
   color:#b4b4b4;
   border: #b4b4b4 solid 2px;
   border-radius: 25px;
-  padding: 2px;
+  height: var(--node-height);
   padding-left: 10px;
 }
 
@@ -173,9 +173,7 @@ button {
 button.add {
   background-color: var(--node-add);
   border-color: var(--node-add-border);
-  width: 24px;
-  height: 24px;
-  padding: 0;
+  height: var(--node-height);
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
