@@ -42,12 +42,15 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
                     <h3>{formatText(effect)}</h3>
                 </div>
                 <div className='node'>
-                    <p className='label'>Multiplier: </p>
-                    <input value={value.multiplier} onChange={(e) => {update('multiplier', e.target.value)}}/>
+                    <a className='label'>Multiplier: </a>
+                    <input value={value.multiplier} className='valueInput' onChange={(e) => {update('multiplier', e.target.value)}}/>
                 </div>
                 <div className='node'>
-                    <p>Target:</p>
-                    <select  name="class" id="class" value={value.target} onChange={e => {update('target', e.target.value)}}>
+                    <a>Target:</a>
+                    <select  className='valueInput' value={value.target} onChange={e => {update('target', e.target.value)}}>
+                        {/* {availableTargets.filter(item => (item in targetList)).map((item) => (
+                            <option key={item} value={item}>{formatElement(item)}</option>
+                        ))} */}
                         <option value='self'>Self</option>
                         <option value="ritual">Ritual</option>
                         <option value="player">Player</option>

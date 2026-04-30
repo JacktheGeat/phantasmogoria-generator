@@ -36,7 +36,7 @@ function AttributeBox(setJSON) {
       <>
         <div className="node">
           <a className="nodeName">Attributes: </a>
-          <select className='add' value={selectedValue} onChange={e => {setSelectedValue(e.target.value)}}>
+          <select className='valueInput add' value={selectedValue} onChange={e => {setSelectedValue(e.target.value)}}>
             <option></option>
             {availableAttributes.filter(item => !(item in attributeList)).map((item) => (
               <option key={item} value={item}>{formatElement(item)}</option>

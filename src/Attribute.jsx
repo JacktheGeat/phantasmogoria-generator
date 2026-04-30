@@ -27,8 +27,8 @@ const Attribute = ({ id, setJSON }) => {
             <div className='attributeBox'>
                 <div className='node'>
                         <button className='remove' onClick={() => {setJSON(myID, undefined)}}>-</button>
-                        <h3>{formatElement(myID)}:</h3>
-                        <input value={value} onChange={e => update(e.target.value)}/>
+                        <a>{formatElement(myID)}:</a>
+                        <input className='valueInput' value={value} onChange={e => update(e.target.value)}/>
                 </div>
             </div>
         </>

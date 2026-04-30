@@ -7,7 +7,7 @@ export function formatText(word) {
 export function alert() {
     return <>
         <div className="error">
-            <a>!</a>
+            <error>!</error>
         </div>
     </>
 }

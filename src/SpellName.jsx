@@ -16,8 +16,8 @@ function SpellName({setJSON}) {
     
     return (
         <div className="node">
-            <a className="nodeName">Name: </a>
-            <input  name="name" id="neme" value={name} onChange={e => handleSetName(e.target.value)}/>
+            <a title="Click to submit your info" className="nodeName">Name: </a>
+            <input className='valueInput' value={name} onChange={e => handleSetName(e.target.value)}/>
             {(name == '') && <Alert/>}
         </div>
     )

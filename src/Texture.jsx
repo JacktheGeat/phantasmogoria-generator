@@ -9,7 +9,7 @@ function Texture({setTexture}) {
     return (
         <div className="node">
             <a className="nodeName">Texture: </a>
-            <input  name="name" id="name" onChange={e => setTexture('texture', e.target.value)}/>
+            <input  className='valueInput' onChange={e => setTexture('texture', e.target.value)}/>
         </div>
     )
 }

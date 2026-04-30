@@ -53,7 +53,7 @@ function EffectBox({setJSON}) {
     <>
     <div className="node">
       <a className="nodeName">Effects: </a>
-      <select className="add" value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
+      <select className='valueInput' value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
         <option value=''></option>
         {EffectsList.map(item => (
           <option key={item} value={item}>{formatElement(item)}</option>

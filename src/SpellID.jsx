@@ -16,8 +16,10 @@ function SpellID({setJSON}) {
     
     return (
         <div className="node">
-            <a className="nodeName">ID: </a>
-            <input  name="ID" id="ID" value={id} onChange={e => handleSetID(e.target.value)}/>
+            
+                <a className="nodeName">ID: </a>
+            
+            <input  className='valueInput' value={id} onChange={e => handleSetID(e.target.value)}/>
             {(id == '') && <Alert/>}
         </div>
     )

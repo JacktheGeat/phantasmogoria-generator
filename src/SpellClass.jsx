@@ -67,7 +67,7 @@ function SpellClass({setJSON}) {
         <>
             <div className="node">
                 <a className="nodeName">Class: </a>
-                <select  name="class" id="class" value={spellClass} onChange={e => handleClass(e.target.value)}>
+                <select  className='valueInput' value={spellClass} onChange={e => handleClass(e.target.value)}>
                     <option value=''></option>
                     <option value="base">Base</option>
                     <option value="sigil">Sigil</option>
