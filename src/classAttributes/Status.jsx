@@ -62,14 +62,14 @@ function statusAttributes(setJSON) {
                 <>
                     <div className="node">
                         <a className="nodeName">Duration: </a>
-                        <select  name="class" id="class" value={stackType} onChange={e => handleSetType(e.target.value)}>
+                        <select  className='valueInput' value={stackType} onChange={e => handleSetType(e.target.value)}>
                             <option value="none">None</option>
                             <option value="duration">Duration</option>
                             <option value="intensity">Intensity</option>
                             <option value="both">Both</option>
                         </select>
                     </div>
-                    <div className='container' style={{paddingLeft: '20px'}}>
+                    <div className='node-box'>
                         <div className="node">
                             <a>{isSeparate}</a>
                             <SeparateButton/>

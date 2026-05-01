@@ -77,7 +77,7 @@ function SpellClass({setJSON}) {
                 </select>
                 { (spellClass == '') && <Alert/>}
             </div>
-            <div className='container' style={{paddingLeft: '20px'}}>
+            <div className='node-box'>
               {base.display}
               {sigil.display}
               {augment.display}

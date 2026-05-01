@@ -44,11 +44,11 @@ function augmentAttributes(setJSON) {
                 <>
                     <div className="node">
                         <a className="nodeName">Amount: </a>
-                        <input type="number" step='1' id="amount" value={amount} onChange={e => handleSetAmount(e.target.value)}/>
+                        <input className='valueInput' type="number" step='1' id="amount" value={amount} onChange={e => handleSetAmount(e.target.value)}/>
                     </div>
                     <div className="node">
                         <a className="nodeName">Consumability: </a>
-                        <select id="consumability" value={consumability} onChange={e => handleSetConsume(e.target.value)}>
+                        <select className='valueInput' id="consumability" value={consumability} onChange={e => handleSetConsume(e.target.value)}>
                             <option value="Refreshing">Refreshing</option>
                             <option value="consumable">Consumable</option>
                             <option value="nonconsumable">Nonconsumable</option>

@@ -34,7 +34,7 @@ function baseAttributes(setJSON) {
             return (
                 <div className="node">
                 <a className="nodeName">Growth Rate: </a>
-                <input type="number" step='0.1' id="growth_rate" value={growthRate} onChange={e => handleSetGR(e.target.value)}/>
+                <input className='valueInput' type="number" step='0.1' id="growth_rate" value={growthRate} onChange={e => handleSetGR(e.target.value)}/>
                 </div>
             );
         }

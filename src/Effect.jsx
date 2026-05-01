@@ -35,18 +35,18 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
 
     return (
         <>
-            <div className='effectBox'>
+            <div className='nodeBox'>
             <div className='flex_column'>
                 <div className='node-header'>
                     <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
                     <h3>{formatText(effect)}</h3>
                 </div>
                 <div className='node'>
-                    <a className='label'>Multiplier: </a>
+                    <a className='nodeName'>Multiplier: </a>
                     <input value={value.multiplier} className='valueInput' onChange={(e) => {update('multiplier', e.target.value)}}/>
                 </div>
                 <div className='node'>
-                    <a>Target:</a>
+                    <a className='nodeName'>Target:</a>
                     <select  className='valueInput' value={value.target} onChange={e => {update('target', e.target.value)}}>
                         {/* {availableTargets.filter(item => (item in targetList)).map((item) => (
                             <option key={item} value={item}>{formatElement(item)}</option>

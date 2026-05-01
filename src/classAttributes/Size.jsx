@@ -34,7 +34,7 @@ function sizeHandler(setJSON) {
             return (
                 <div className="node">
                 <a className="nodeName">Size: </a>
-                <input type="number" step='1' id="size" value={size} onChange={e => handleSetSize(e.target.value)}/>
+                <input className='valueInput' type="number" step='1' id="size" value={size} onChange={e => handleSetSize(e.target.value)}/>
                 </div>
             );
         }

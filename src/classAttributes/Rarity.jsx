@@ -34,7 +34,7 @@ function useRarityHandler(setJSON) {
             return (
                 <div className="node">
                     <a className="nodeName">Rarity: </a>
-                    <select name='rarity' id="rarity" value={rarity} onChange={
+                    <select className='valueInput' value={rarity} onChange={
                     e => {handleSetRarity( e.target.value )}}>
                         <option value="basic">Basic</option>
                         <option value="common">Commmon</option>

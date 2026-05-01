@@ -56,9 +56,9 @@ function spellAttributes(setJSON) {
 
     function inputOC() {
         if (curve == 'fixed') {
-            return <input disabled type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
+            return <input className='valueInput' disabled type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
         }
-        return <input type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
+        return <input className='valueInput' type="number" inputMode="numeric" step='0.01' id="base_power" value={overcharge} onChange={e => handleSetOC(e.target.value)}/>;
     }
 
     function display() {
@@ -71,21 +71,21 @@ function spellAttributes(setJSON) {
                 <>
                     <div className="node">
                         <a className="nodeName">Mana Cost: </a>
-                        <input type="number" step='1' id="mana_cost" value={cost} onChange={e => handleSetCost(e.target.value)}/>
+                        <input className='valueInput' type="number" step='1' id="mana_cost" value={cost} onChange={e => handleSetCost(e.target.value)}/>
                     </div>
                     <div className="node">
                         <a className="nodeName">Base Power: </a>
-                        <input type="number" inputMode="numeric" step='1' id="base_power" value={power} onChange={e => handleSetPower(e.target.value)}/>
+                        <input className='valueInput' type="number" inputMode="numeric" step='1' id="base_power" value={power} onChange={e => handleSetPower(e.target.value)}/>
                     </div>
                     <div className="node">
                         <a className="nodeName">Mana Curve: </a>
-                        <select  name="class" id="class" value={curve} onChange={e => handleSetCurve(e.target.value)}>
+                        <select className='valueInput' value={curve} onChange={e => handleSetCurve(e.target.value)}>
                             <option value="fixed">Fixed</option>
                             <option value="linear">Linear</option>
                             <option value="exponential">Exponential</option>
                         </select>
                     </div>
-                    <div className='container' style={{paddingLeft: '20px'}}>
+                    <div className='node-box'>
                         <div className="node">
                             <a className="nodeName">Overcharge: </a>
                             {inputOC()}
