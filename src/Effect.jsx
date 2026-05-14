@@ -46,6 +46,19 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
                     <input value={value.multiplier} className='valueInput' onChange={(e) => {update('multiplier', e.target.value)}}/>
                 </div>
                 <div className='node'>
+                    <a className='nodeName'>Source:</a>
+                    <select  className='valueInput' value={value.source} onChange={e => {update('source', e.target.value)}}>
+                        {/* {availableTargets.filter(item => (item in targetList)).map((item) => (
+                            <option key={item} value={item}>{formatElement(item)}</option>
+                        ))} */}
+                        <option value='constant'>Constant</option>
+                        <option value="power">Power</option>
+                        <option value="player_health">Player Health</option>
+                        <option value="player_block">Player Block</option>
+                        <option value="mana">Remining Mana</option>
+                    </select>
+                </div>
+                <div className='node'>
                     <a className='nodeName'>Target:</a>
                     <select  className='valueInput' value={value.target} onChange={e => {update('target', e.target.value)}}>
                         {/* {availableTargets.filter(item => (item in targetList)).map((item) => (
