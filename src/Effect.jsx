@@ -70,6 +70,10 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
                         <option value="enemy">Enemy</option>
                     </select>
                 </div>
+                <div className='node'>
+                    <a className='nodeName'>Modifiers:</a>
+                    <input type="checkbox" onChange={e => {}}/>
+                </div>
             </div>
             </div>
         </>

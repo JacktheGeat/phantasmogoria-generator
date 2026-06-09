@@ -87,7 +87,8 @@ function App() {
 
   return (
     <>
-      <h1>Json generator</h1>
+      <div align="left"><a className="button" href="https://jackthegeat.github.io/">Return to Homepage</a></div>
+      <h1>Project: Phantasmogoria card generator</h1>
       <div className="flex_column" id="generator">
         <SpellID setJSON={jsonObject.handleSetJSON}/>
 

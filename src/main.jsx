@@ -8,7 +8,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/react-site" element={<App />} />
+        <Route path="/phantasmogoria-generator" element={<App />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
