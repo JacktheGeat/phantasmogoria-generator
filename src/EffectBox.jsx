@@ -5,10 +5,14 @@ import Effect from './Effect';
 
 export default EffectBox;
 
-function EffectBox({setJSON}) {
+function EffectBox({setJSON, classType}) {
 
   const [selectedValue, setSelectedValue] = useState('');
-  const EffectsList = ["exhaust", "expunge", "status", "block", "damage", "multi_damage", "heal", "draw", "mana_restore", "apply_modifier", "modify_player", "modify_component", "modify_component_type", "modify_component_tag"];
+  const EffectsList = (classType) => {
+    let result = []
+    result = ["exhaust", "expunge", "status", "block", "damage", "multi_damage", "heal", "draw", "mana_restore", "apply_modifier", "modify_player", "modify_component", "modify_component_type", "modify_component_tag"];
+    return result
+  }
   const [effectBox, setEffectBox] = useState([])
   const [effectList, setEffectList] = useState([]);
 
@@ -55,7 +59,7 @@ function EffectBox({setJSON}) {
       <a className="nodeName">Effects: </a>
       <select className='valueInput' value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
         <option value=''></option>
-        {EffectsList.map(item => (
+        {EffectsList(classType).map(item => (
           <option key={item} value={item}>{formatElement(item)}</option>
         ))}
       </select>
@@ -66,8 +70,9 @@ function EffectBox({setJSON}) {
             {
               effect: selectedValue,
               multiplier: 0,
-              source: 'constant',
-              target: 'self',
+              multiplierType: 'constant',
+              source: '',
+              target: '',
               conditions: [],
               modifiers: []
             }

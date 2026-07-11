@@ -2,7 +2,7 @@ import {React, useState } from 'react';
 
 import './App.css'
 import { formatText } from './helper';
-
+import { alert as Alert } from './helper';
 
 const Effect = ({ myEffect, myKey, setJSON }) => {
     const floatEffects = []
@@ -10,8 +10,9 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
     const [value, setValue] = useState({
             effect: myEffect,
             multiplier: 0,
-            source: 'constant',
-            target: 'self',
+            multiplierType: 'constant',
+            source: '',
+            target: '',
             conditions: [],
             modifiers: [],
             effect_var: undefined
@@ -36,28 +37,58 @@ const Effect = ({ myEffect, myKey, setJSON }) => {
     return (
         <>
             <div className='nodeBox'>
-            <div className='flex_column'>
-                <div className='node-header'>
-                    <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
-                    <h3>{formatText(effect)}</h3>
+                <div className='flex_column'>
+                    <div className='node-header'>
+                        <button className='remove' onClick={() => {setJSON(key, undefined)}}>-</button>
+                        <h3>{formatText(effect)}</h3>
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Multiplier: </a>
+                        <input value={value.multiplier} className='valueInput' onChange={(e) => {update('multiplier', e.target.value)}}/>
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Multiplier Type:</a>
+                        <select  className='valueInput' value={value.multiplierType} onChange={e => {update('multiplierType', e.target.value)}}>
+                            <option value=''></option>
+                            <option value='constant'>Self</option>
+                            <option value="exponential">Ritual</option>
+                        </select>
+                        {(value.multiplierType == '') && <Alert/>}
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Source:</a>
+                        <select  className='valueInput' value={value.source} onChange={e => {update('source', e.target.value)}}>
+                            <option value=''></option>
+                            <option value='spell_power'>Spell Power</option>
+                            <option value="player_shield">Player Shield</option>
+                            <option value="player_health">Player Health</option>
+                            <option value="enemy_health">Enemy Health</option>
+                        </select>
+                        {(value.source == '') && <Alert/>}
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Target:</a>
+                        <select  className='valueInput' value={value.target} onChange={e => {update('target', e.target.value)}}>
+                            <option value=''></option>
+                            <option value='self'>Self</option>
+                            <option value="ritual">Ritual</option>
+                            <option value="player">Player</option>
+                            <option value="enemy">Enemy</option>
+                            <option value="hand">Hand</option>
+                        </select>
+                        {(value.target == '') && <Alert/>}
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Conditions:</a>
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Effect Var:</a>
+                        <input value={value.effect_var} className='valueInput' onChange={(e) => {update('effect_var', e.target.value)}}/>
+                    </div>
+                    <div className='node'>
+                        <a className='nodeName'>Tags:</a>
+                    </div>
                 </div>
-                <div className='node'>
-                    <a className='nodeName'>Multiplier: </a>
-                    <input value={value.multiplier} className='valueInput' onChange={(e) => {update('multiplier', e.target.value)}}/>
-                </div>
-                <div className='node'>
-                    <a className='nodeName'>Target:</a>
-                    <select  className='valueInput' value={value.target} onChange={e => {update('target', e.target.value)}}>
-                        {/* {availableTargets.filter(item => (item in targetList)).map((item) => (
-                            <option key={item} value={item}>{formatElement(item)}</option>
-                        ))} */}
-                        <option value='self'>Self</option>
-                        <option value="ritual">Ritual</option>
-                        <option value="player">Player</option>
-                        <option value="enemy">Enemy</option>
-                    </select>
-                </div>
-            </div>
             </div>
         </>
     )

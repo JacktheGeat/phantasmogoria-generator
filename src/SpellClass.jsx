@@ -86,7 +86,7 @@ function SpellClass({setJSON}) {
               {size.display}
               {rarity.display}
             </div>
-            <EffectBox setJSON={setJSON}/>
+            <EffectBox setJSON={setJSON} classType={spellClass}/>
             {attributesHandler.display}
         </>
     )
